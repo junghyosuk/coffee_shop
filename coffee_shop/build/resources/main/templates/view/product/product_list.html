@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>website</title>
+</head>
+<body>
+<!-- layout.html에서 content 영역에 삽입될 내용 -->
+<div layout:fragment="content">
+    <h2 class="tit_main">상품 리스트</h2>
+    <div class="wrap_filter">
+        <span class="total_num">상품 <b>00</b>개</span>
+        <div class="inner_filter clear_fix">
+            <ul class="list_filter">
+                <li><a href="#">등록일순</a></li>
+                <li><a href="#">높은가격순</a></li>
+                <li><a href="#">낮은가격순</a></li>
+            </ul>
+        </div>
+    </div>
+    <ul class="list_product">
+        <li>
+            <a href="#" class="link_product">
+                <span class="wrap_img">
+                    <img src="/images/product_coffee1.jpg" th:src="@{/images/product_coffee1.jpg}" class="img_product" alt="">
+                </span>
+                <span class="name_product">콜롬비아 수프리모</span>
+                <span class="screen_out">가격</span><span class="price_product">20,000원</span>
+            </a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>
