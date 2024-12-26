@@ -12,7 +12,7 @@ public class ProductController {
     //product list 페이지
     @GetMapping("/list")
     public String productList(){
-        return "/view/product_list";
+        return "/view/product/product_list";
     }
 
 

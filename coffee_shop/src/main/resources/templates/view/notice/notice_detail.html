@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+<div class="login-container">
+    <h2>Login</h2>
+    <!-- 로그인 폼 -->
+    <!--  <form th:action="@{/login}" method="post">-->
+    <form th:action="@{/login}" method="post" th:object="${loginUser}">
+        <div class="form-group">
+            <label for="usersId">User ID</label>
+            <input type="text" id="usersId" name="usersId" th:field="*{usersId}" required placeholder="Enter your user ID">
+        </div>
+        <div class="form-group">
+            <label for="usersPw">Password</label>
+            <input type="password" id="usersPw" name="usersPw" th:field="*{usersPw}" required placeholder="Enter your password">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn">Login</button>
+        </div>
+    </form>
+    <!-- 회원가입 링크 -->
+    <p>
+        Don't have an account? <a th:href="@{/users/create}">Sign up</a>
+    </p>
+</div>
+</body>
+</html>

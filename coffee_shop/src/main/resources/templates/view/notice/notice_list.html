@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Notice List</title>
+</head>
+<body>
+<div id="notice_list">
+    <!--  <h2>Notices (Total: [[${notices.totalElements}]])</h2>-->
+    <h2>Notices (Total: [[${notices != null ? notices.totalElements : 0}]])</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>글번호</th>
+            <th>제목</th>
+            <th>내용</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="notice : ${notices.content}">
+            <td th:text="${notice.noticeNo}"></td>
+            <td>
+                <a th:href="@{/notice/detail(noticeNo=${notice.noticeNo})}" th:text="${notice.noticeTitle}"></a>
+            </td>
+            <td th:text="${notice.noticeContent}"></td>
+            <td th:text="${notice.noticeDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div id="pagination">
+        <span th:if="${currentPage > 1}">
+            <a th:href="@{/notice(pageNum=${currentPage - 1}, pageSize=${pageSize})}">Previous</a>
+        </span>
+        <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+            <a th:href="@{/notice(pageNum=${i}, pageSize=${pageSize})}"
+               th:text="${i}"
+               th:classappend="${i == currentPage} ? 'current' : ''"></a>
+        </span>
+        <span th:if="${currentPage < totalPages}">
+            <a th:href="@{/notice(pageNum=${currentPage + 1}, pageSize=${pageSize})}">Next</a>
+        </span>
+    </div>
+</div>
+</body>
+</html>

@@ -1,7 +1,7 @@
 package springboot.webproject.dto;
 
 
-
+import jakarta.persistence.*;
 
 /*
  CREATE TABLE USERS (
@@ -25,12 +25,20 @@ DESC USERS;
 
 SELECT * FROM USERS;
 
+
+	4.	@GeneratedValue
+	•	기본 키 값 생성 전략을 지정합니다.
+	•	strategy 속성을 사용해 다음 중 하나를 선택:
+	•	GenerationType.IDENTITY: 데이터베이스에서 자동 증가 값을 사용.
+	•	GenerationType.SEQUENCE: 지정된 시퀀스를 사용 (Oracle과 같은 DB에 적합).
+	•	GenerationType.TABLE: 키를 저장하는 별도의 테이블 사용.
+	•	GenerationType.AUTO: 데이터베이스에 따라 자동으로 전략 선택.
  */
-//@Entity
-//@Table(name = "users")//	엔티티 클래스에 @Table(name = "users")가 누락된 경우 발생할 수 있습니다.UsersDTO 클래스에 @Table 애노테이션을 추가하고, 실제 테이블 이름을 명시합니다.
+@Entity
+@Table(name = "users")//	엔티티 클래스에 @Table(name = "users")가 누락된 경우 발생할 수 있습니다.UsersDTO 클래스에 @Table 애노테이션을 추가하고, 실제 테이블 이름을 명시합니다.
 public class UsersDTO {
-   // @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int usersNo;
     private String usersId;
     private String usersPw;

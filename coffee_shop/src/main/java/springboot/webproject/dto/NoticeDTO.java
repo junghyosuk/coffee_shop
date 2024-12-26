@@ -16,10 +16,12 @@ VARCHAR2(2000), NOTICE_STATUS NUMBER(1), NOTICE_DATE DATE);
 create sequence NOTICE; */
 
 
-//@Entity
+import jakarta.persistence.*;
+@Entity
+@Table(name = "notice")//
 public class NoticeDTO {
-   //@Id
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int noticeNo;
     private String noticeTitle;
     private String noticeContent;
