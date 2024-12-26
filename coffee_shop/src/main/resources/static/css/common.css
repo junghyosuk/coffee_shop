@@ -1,0 +1,42 @@
+@charset "utf-8";
+
+/* reset */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,textarea,p,blockquote,th,td,input,select,textarea,button {margin:0;padding:0}
+fieldset,img {border:0 none;vertical-align:top;}
+dl,ul,ol,li {list-style:none}
+blockquote, q {quotes: none}
+blockquote:before, blockquote:after,q:before, q:after {content:'';content:none}
+input,select,textarea,button {vertical-align:middle}
+button {border:0 none;background-color:transparent;cursor:pointer}
+body {background:#fff}
+body,th,td,input,select,textarea,button,pre {font-size:14px;line-height:1.5;font-family:"Noto Sans KR", Malgun Gothic,"맑은 고딕",AppleGothic,Dotum,"돋움",sans-serif;color:#333} /* color값은 디자인가이드에 맞게사용 */
+a {color:#333;text-decoration:none}
+a:active, a:hover {text-decoration:none;}
+address,caption,cite,code,dfn,em,var {font-style:normal;font-weight:normal}
+
+/* 공통 CSS */
+.screen_out{overflow:hidden;position:absolute;width:0;height:0;line-height:0;text-indent:-9999px}
+.clear_fix:after{display:block;clear:both;content:'';}
+
+/* header */
+.wrap_header{border-bottom:1px solid #eee;}
+.top_header{border-bottom:1px solid #eee;}
+.top_header .inner_top{width:1024px;margin:0 auto;text-align:right;}
+.list_top{padding:6px 0;}
+.list_top li{display:inline-block;}
+.list_top .link_top{margin-left:20px;}
+
+.header{width:1024px;margin:0 auto;}
+.header .tit_logo{float:left;padding-top:8px;}
+.header .list_nav{float:right;padding-top:10px;}
+.list_nav li{float:left;}
+.list_nav .link_nav{display:block;height:42px;margin-left:40px;font-size:16px;line-height:42px;}
+
+
+/* content */
+.cont{width:1024px;margin:0 auto;padding:40px 0 60px;}
+.tit_cont{padding:0 0 20px;font-weight:bold;font-size:24px;text-align:center;}
+
+/* footer */
+.wrap_footer{padding:25px 0;border-top:1px solid #eee;}
+.footer{width:1024px;margin:0 auto;text-align:center;}

@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+/* 상품리스트 공통 */
+.list_product:after{display:block;clear:both;content:'';}
+.list_product li{float:left;width:25%;height:350px;padding-bottom:25px;text-align:center;}
+.list_product li:first-child{margin-left:0}
+.list_product .img_product{width:100%}
+.list_product .name_product{overflow:hidden;display:block;height:36px;padding:10px 0 6px;font-size:13px;color:#333;text-overflow:ellipsis;display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;word-break: break-word;}
+.list_product .product_price{display:block;font-size:16px;font-weight:bold;color:#000;}
+.list_product .product_stat{padding-top:8px;}
+.list_product .link_product{display:block;padding:6px 6px 0 6px;}
+.list_product .wrap_img{display:block;overflow:hidden;width:244px;height:244px;overflow:hidden;}
+.list_product .img_product{transition-property:transform;transition-duration:0.2s;}
+.list_product .link_product:hover .img_product{transform:scale(1.1)}

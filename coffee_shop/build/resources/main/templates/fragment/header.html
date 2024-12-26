@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>website</title>
+</head>
+<body>
+<div id="header" class="wrap_header" th:fragment="header">
+    <div class="top_header">
+        <div class="inner_top">
+            <ul class="list_top">
+                <li><a href="/login" th:href="@{/login}" class="link_top">로그인</a></li>
+                <li><a href="/signup" th:href="@{/signup}" class="link_top">회원가입</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="header clear_fix">
+        <h1 class="tit_logo"><a href="/" th:href="@{/}" class="link_logo">로고</a></h1>
+        <ul class="list_nav">
+            <li><a href="/mypage" th:href="@{/mypage}" class="link_nav">메뉴1</a></li>
+            <li><a href="/work_time" th:href="@{/work_time}" class="link_nav">메뉴2</a></li>
+            <li><a href="/work_manage" th:href="@{/work_manage}" class="link_nav">메뉴3</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
