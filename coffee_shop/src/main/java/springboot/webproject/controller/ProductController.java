@@ -9,10 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/product")
 @RequiredArgsConstructor
 public class ProductController {
-    //product list 페이지
-    @GetMapping("/list")
-    public String productList(){
-        return "/view/product/product_list";
+    //coffeebean list 페이지
+    @GetMapping("/coffeebean")
+    public String coffeebeanList(){
+        return "/view/product/coffeebean_list";
+    }
+
+    //coldbrew list 페이지
+    @GetMapping("/coldbrew")
+    public String coldbrewList(){
+        return "/view/product/coldbrew_list";
     }
 
 

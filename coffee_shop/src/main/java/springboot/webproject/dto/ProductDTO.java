@@ -2,6 +2,9 @@ package springboot.webproject.dto;
 
 
 import lombok.Data;
+import springboot.webproject.entity.ProductEntity;
+
+import java.time.LocalDateTime;
 
 /*
 CREATE TABLE PRODUCT (
@@ -42,6 +45,23 @@ public class ProductDTO {
     private String prodImage3;
     private String prodImage4;
     private String prodInfo;
-    private String prodInDate;
+    private LocalDateTime prodRegdate;
+
+    //DTO 객체를 Entity 객체로 변환하여 반환하는 메소드 - INSERT 명령 또는 UPDATE 명령 사용시 호출
+    public ProductEntity toProductEntity(){
+        ProductEntity entity=new ProductEntity();
+        entity.setProdNo(prodNo);
+        entity.setProdType(prodType);
+        entity.setProdName(prodName);
+        entity.setProdPrice(prodPrice);
+        entity.setProdAmount(prodAmount);
+        entity.setProdImage1(prodImage1);
+        entity.setProdImage2(prodImage2);
+        entity.setProdImage3(prodImage3);
+        entity.setProdImage4(prodImage4);
+        entity.setProdInfo(prodInfo);
+
+        return entity;
+    }
 
 }

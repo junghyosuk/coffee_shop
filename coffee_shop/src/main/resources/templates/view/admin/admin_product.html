@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>website</title>
+</head>
+<body>
+<!-- layout.html에서 content 영역에 삽입될 내용 -->
+<div layout:fragment="content">
+    <h2 class="tit_main">상품관리</h2>
+    <div class="add_product">
+        <form action="#" method="post" class="form_product" id="formProduct" enctype="multipart/form-data">
+            <table class="tbl_product" id="tblProductAdd">
+                <tr>
+                    <th>제품번호</th>
+                    <td style="background-color:#ccc;">자동입력</td>
+                </tr>
+                <tr>
+                    <th><label for="nameProduct">제품타입</label></th>
+                    <td>
+                        <select name="typeProduct" id="typeProduct" class="select_product">
+                            <option>1 : 커피원두</option>
+                            <option>2 : 콜드브루</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="nameProduct">제품명</label></th>
+                    <td>
+                        <input type="text" class="inp_product" name="nameProduct" id="nameProduct">
+                        <span class="warn_form">값을 입력해 주세요.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="priceProduct">가격</label></th>
+                    <td>
+                        <input type="text" class="inp_product" name="priceProduct" id="priceProduct">
+                        <span class="warn_form">값을 입력해 주세요.</span>
+                    </td>
+
+                </tr>
+                <tr>
+                    <th><label for="amountProduct">수량</label></th>
+                    <td>
+                        <input type="text" class="inp_product" name="priceProduct" id="amountProduct">
+                        <span class="warn_form">값을 입력해 주세요.</span>
+                    </td>
+
+                </tr>
+                <tr>
+                    <th><label for="imgMainProduct">제품이미지</label></th>
+                    <td>
+                        <input type="file" class="inp_product" name="imgMainProduct" id="imgMainProduct">
+                        <span class="warn_form">이미지를 등록해 주세요</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="imgSub1Product">상세이미지1</label></th>
+                    <td>
+                        <input type="file" class="inp_product" name="imgSubProduct" id="imgSub1Product">
+                        <span class="warn_form">이미지를 등록해 주세요</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="imgSub2Product">상세이미지2</label></th>
+                    <td>
+                        <input type="file" class="inp_product" name="imgSubProduct" id="imgSub2Product">
+                        <span class="warn_form">이미지를 등록해 주세요</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="imgSub3Product">상세이미지3</label></th>
+                    <td>
+                        <input type="file" class="inp_product" name="imgSubProduct" id="imgSub3Product">
+                        <span class="warn_form">이미지를 등록해 주세요</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="infoProduct">제품정보</label></th>
+                    <td>
+                        <textarea id="infoProduct"></textarea>
+                    </td>
+                </tr>
+                <th>등록일시</th>
+                <td style="background-color:#ccc;">자동입력</td>
+                </tr>
+            </table>
+            <div class="bottom_btn">
+                <button type="submit" class="btn_form btn_submit" id="btnProductSubmit">등록</button>
+                <button type="reset" class="btn_form btn_reset">초기화</button>
+                <button type="button" class="btn_form btn_close">닫기</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
