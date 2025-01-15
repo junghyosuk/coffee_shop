@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_seq_generator")
-    private int prodNo;
+    private Long prodNo;
     @Column(length = 1)
     private int prodType;
     @Column(length = 200)

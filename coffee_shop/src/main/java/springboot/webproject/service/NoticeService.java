@@ -13,4 +13,5 @@ public interface NoticeService {
 
     // 특정 공지사항 상세 정보를 반환
     Optional<NoticeDTO> getNoticeDetail(int noticeNo);
+
 }

@@ -35,7 +35,7 @@ COMMIT;
 public class ProductDTO {
     //@Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int prodNo;
+    private Long prodNo;
     private int prodType;
     private String prodName;
     private int prodPrice;

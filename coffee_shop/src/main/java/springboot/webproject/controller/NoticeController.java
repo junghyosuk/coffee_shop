@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import springboot.webproject.dto.NoticeDTO;
 import springboot.webproject.service.NoticeService;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/user")
 public class NoticeController {
     private final NoticeService noticeService;
 
@@ -45,10 +47,16 @@ public class NoticeController {
         return "view/notice/notice_list";
     }
     @GetMapping("/notices/detail")
-    public String getNoticeDetail(@RequestParam("noticeNo") int noticeNo, Model model){
+    public String getNoticeDetail(@RequestParam("noticeNo") int noticeNo,
+                                  @RequestParam("pageNum") int pageNum,
+                                  @RequestParam("pageSize") int pageSize,
+                                  Model model){
         Optional<NoticeDTO> notice = noticeService.getNoticeDetail(noticeNo);
         if(notice.isPresent()){
             model.addAttribute("notice", notice.get());
+            // 페이징 정보 전달
+            model.addAttribute("currentPage", pageNum);
+            model.addAttribute("pageSize", pageSize);
             return "view/notice/notice_detail";
         }else{
             return "redirect:/notices?error=notfound";

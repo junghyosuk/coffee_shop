@@ -24,6 +24,8 @@ public class NoticeServiceImpl implements NoticeService {
 
     @Override
     public Optional<NoticeDTO> getNoticeDetail(int noticeNo) {
+
         return noticeRepository.findByNoticeNo(noticeNo);
     }
+
 }

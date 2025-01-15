@@ -3,6 +3,9 @@ package springboot.webproject.dto;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  CREATE TABLE USERS (
     USERS_NO NUMBER CONSTRAINT USERS_NO_PK PRIMARY KEY,
@@ -51,6 +54,18 @@ public class UsersDTO {
     private String usersSigndate;
     private String usersLastLogin;
     private int usersStatus;
+    //권한을 주기위해 유저의 숫자를 권한의 숫자와 매칭할수있게 만드는 또다른 테이블 생성
+    // @ManyToMany 관계를 설정하는 코드를 UsersDTO 클래스에 넣는 것은 올바른 접근입니다. 이 코드는 users 테이블과 roles 테이블 간의 다대다 관계를 user_roles라는 연결 테이블로 매핑하는 방식입니다.
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "users_no"),
+            inverseJoinColumns = @JoinColumn(name = "role_id") // 수정된 컬럼 이름에 맞춤
+    )
+
+    private List<Role> roles =  new ArrayList<>();;
+
+
 
     public UsersDTO() {
         // TODO Auto-generated constructor stub
@@ -129,8 +144,13 @@ public class UsersDTO {
         this.usersStatus = usersStatus;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
 
-
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 }
 /*
 CREATE TABLE USERS (
