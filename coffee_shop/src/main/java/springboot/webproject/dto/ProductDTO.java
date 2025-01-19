@@ -2,9 +2,11 @@ package springboot.webproject.dto;
 
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 import springboot.webproject.entity.ProductEntity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /*
 CREATE TABLE PRODUCT (
@@ -16,7 +18,6 @@ CREATE TABLE PRODUCT (
    PROD_IMAGE1 VARCHAR2(1000),
    PROD_IMAGE2 VARCHAR2(1000),
    PROD_IMAGE3 VARCHAR2(1000),
-   PROD_IMAGE4 VARCHAR2(1000),
    PROD_INFO VARCHAR2(2000),
    PROD_IN_DATE DATE DEFAULT SYSDATE
 );
@@ -30,38 +31,32 @@ SELECT * FROM product;
 COMMIT;
 
 */
-//@Entity
 @Data
 public class ProductDTO {
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long prodNo;
-    private int prodType;
-    private String prodName;
-    private int prodPrice;
-    private int prodAmount;
-    private String prodImage1;
-    private String prodImage2;
-    private String prodImage3;
-    private String prodImage4;
-    private String prodInfo;
-    private LocalDateTime prodRegdate;
+    private Long prodNo; // 제품번호 (자동 생성)
+    private int prodType; // 제품 타입
+    private String prodName; // 제품명
+    private int prodPrice; // 가격
+    private int prodAmount; // 수량
+    private MultipartFile prodImage1; // 메인 이미지 파일
+    private MultipartFile prodImage2; // 서브 이미지 파일
+    private String prodImage1Name; // 메인 이미지 파일명
+    private String prodImage2Name; // 서브 이미지 파일명
+    private String prodInfo; // 제품 정보
+    private LocalDateTime prodRegdate; // 등록일시
 
-    //DTO 객체를 Entity 객체로 변환하여 반환하는 메소드 - INSERT 명령 또는 UPDATE 명령 사용시 호출
-    public ProductEntity toProductEntity(){
-        ProductEntity entity=new ProductEntity();
+    // DTO → Entity 변환
+    public ProductEntity toEntity(String mainImageName, String subImageName) {
+        ProductEntity entity = new ProductEntity();
         entity.setProdNo(prodNo);
         entity.setProdType(prodType);
         entity.setProdName(prodName);
         entity.setProdPrice(prodPrice);
         entity.setProdAmount(prodAmount);
-        entity.setProdImage1(prodImage1);
-        entity.setProdImage2(prodImage2);
-        entity.setProdImage3(prodImage3);
-        entity.setProdImage4(prodImage4);
+        entity.setProdImage1(mainImageName);
+        entity.setProdImage2(subImageName);
         entity.setProdInfo(prodInfo);
-
+        entity.setProdRegdate(LocalDateTime.now()); // 현재 시간으로 등록일시 설정
         return entity;
     }
-
 }

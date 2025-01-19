@@ -12,3 +12,10 @@
 .list_product .wrap_img{display:block;overflow:hidden;width:244px;height:244px;overflow:hidden;}
 .list_product .img_product{transition-property:transform;transition-duration:0.2s;}
 .list_product .link_product:hover .img_product{transform:scale(1.1)}
+
+
+
+/* 상품관리 */
+.tbl_admin{width:100%;border-collapse:collapse;text-align:center;table-layout:fixed;}
+.tbl_admin th{padding:6px 0;border:1px solid #000;box-sizing:border-box;font-size:14px;background-color:#ccc;}
+.tbl_admin td{overflow:hidden;padding:6px 0;border:1px solid #000;box-sizing:border-box;}

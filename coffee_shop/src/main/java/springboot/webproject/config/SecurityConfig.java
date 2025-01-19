@@ -29,7 +29,7 @@ public class SecurityConfig {
                 // 조심 해야하는부분은 만약 users/create 이렇게 만 넣으면 /users 를 호출 하는 페이지 작동 안함, 정확하게 표시
 
                 .authorizeHttpRequests((authz) -> authz
-                                .requestMatchers("/", "/login", "/users/**", "/css/**", "/js/**", "/images/**","/roles/**","/product/**","/admin/**").permitAll() // 인증 없이 접근 가능
+                                .requestMatchers("/", "/login", "/users/**", "/css/**", "/js/**", "/images/**", "/product_images/**","/roles/**","/product/**","/admin/**").permitAll() // 인증 없이 접근 가능
 //                        .requestMatchers("/admin/**").hasRole("ADMIN") // ROLE_ADMIN만 접근 허용
 //                        .requestMatchers("/user/**").hasRole("USER") // ROLE_USER만 접근 허용 - 로그인 된 유저
                                 .requestMatchers("/user/**").hasAuthority("ROLE_USER")

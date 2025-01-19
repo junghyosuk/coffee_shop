@@ -34,6 +34,7 @@ address,caption,cite,code,dfn,em,var {font-style:normal;font-weight:normal}
 
 
 /* content */
+.main_cont{min-width:1024px;width:100%;}
 .cont{width:1024px;margin:0 auto;padding:40px 0 60px;}
 .tit_cont{padding:0 0 20px;font-weight:bold;font-size:24px;text-align:center;}
 
