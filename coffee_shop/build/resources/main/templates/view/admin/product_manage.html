@@ -110,12 +110,13 @@
                     <td th:text="${product.prodRegdate}">dd</td>
                     <td>
                         <button class="btn_admin">수정</button>
-                        <button class="btn_admin">삭제</button>
+                        <button class="btn_admin btn_remove" th:data-prod-no="${product.prodNo}">삭제</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </div>
+
 </body>
 </html>

@@ -34,4 +34,14 @@ public class AdminProductController {
         productService.save(productDTO); // 상품 저장
         return "redirect:/admin/product"; // 저장 후 상품 관리 페이지로 리다이렉트
     }
+
+    // 상품 삭제 처리
+    @GetMapping("/product/delete/{prodNo}")
+    public String deleteProduct(@PathVariable(value="prodNo") Long prodNo) {
+        productService.deleteProductByProdNo(prodNo);
+        return "redirect:/admin/product";
+    }
+
+
+
 }

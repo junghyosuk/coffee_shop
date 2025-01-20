@@ -21,6 +21,7 @@ public class ProductServiceImpl implements ProductService {
     @Value("${file.upload-dir}") // 파일 저장 경로
     private String uploadDir;
 
+    //상품등록
     @Override
     public void save(ProductDTO productDTO) {
         try {
