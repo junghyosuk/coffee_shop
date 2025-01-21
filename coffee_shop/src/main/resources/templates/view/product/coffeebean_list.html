@@ -11,7 +11,7 @@
 <div layout:fragment="content">
     <h2 class="tit_main">상품 리스트</h2>
     <div class="wrap_filter">
-        <span class="total_num">상품 <b>00</b>개</span>
+        <span class="total_num">상품 <b th:text="${countProduct}">00</b>개</span>
         <div class="inner_filter clear_fix">
             <ul class="list_filter">
                 <li><a href="#">등록일순</a></li>
@@ -21,13 +21,13 @@
         </div>
     </div>
     <ul class="list_product">
-        <li>
-            <a href="/product/coffeebean/view" th:href="@{/product/coffeebean/view}" class="link_product">
+        <li th:each="product : ${productList}">
+            <a th:href="@{/product/coffeebean/view/{prodNo}(prodNo=${product.prodNo})}" class="link_product">
                 <span class="wrap_img">
-                    <img src="/product_images/product_coffee1.jpg" th:src="@{/product_images/product_coffee1.jpg}" class="img_product" alt="">
+                    <img th:src="@{/product_images/{prodImage}(prodImage=${product.prodImage1Name})}" class="img_product" alt="">
                 </span>
-                <span class="name_product">콜롬비아 수프리모</span>
-                <span class="screen_out">가격</span><span class="price_product">20,000원</span>
+                <span class="name_product" th:text="${product.prodName}"></span>
+                <span class="screen_out">가격</span><span class="price_product" th:text="${product.prodPrice} + '원'"></span>
             </a>
         </li>
     </ul>

@@ -52,6 +52,22 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<ProductDTO> findProductsByType(int prodType) {
+        return productRepository.findAll()
+                .stream()
+                .filter(productEntity -> productEntity.getProdType() == prodType) // 타입 필터링
+                .map(ProductEntity::toProductDTO) // Entity → DTO 변환
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public ProductDTO findProductById(Long prodNo) {
+        return productRepository.findById(prodNo)
+                .map(ProductEntity::toProductDTO) // Optional을 DTO로 변환
+                .orElse(null); // 상품이 없으면 null 반환
+    }
+
     // 파일 저장 로직
     private String saveFile(MultipartFile file) throws IOException {
         if (file != null && !file.isEmpty()) {
