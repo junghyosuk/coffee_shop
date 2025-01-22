@@ -1,6 +1,9 @@
+
+
 $(document).ready(function() {
+    //상품삭제 ajax
     $(".btn_remove").click(function() {
-        var prodNo = $(this).data("prod-no"); // 버튼에서 prodNo 값 가져오기
+        const prodNo = $(this).data("prod-no"); // 버튼에서 prodNo 값 가져오기
         if (confirm("정말로 이 상품을 삭제하시겠습니까?")) {
             // 상품 삭제 요청
             $.ajax({
@@ -16,4 +19,12 @@ $(document).ready(function() {
             });
         }
     });
+
+    //상품수정
+    $('.btn_modify').on('click', function() {
+        const prodNo = $(this).data('prod-no');
+        window.location.href = "/admin/product/modify/"+prodNo; // URL 결합
+    });
 });
+
+

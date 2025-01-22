@@ -109,7 +109,7 @@
                     <td th:text="${product.prodInfo}">dd</td>
                     <td th:text="${product.prodRegdate}">dd</td>
                     <td>
-                        <button class="btn_admin">수정</button>
+                        <button class="btn_admin btn_modify" th:data-prod-no="${product.prodNo}">수정</button>
                         <button class="btn_admin btn_remove" th:data-prod-no="${product.prodNo}">삭제</button>
                     </td>
                 </tr>
@@ -117,6 +117,5 @@
         </table>
     </div>
 </div>
-
 </body>
 </html>

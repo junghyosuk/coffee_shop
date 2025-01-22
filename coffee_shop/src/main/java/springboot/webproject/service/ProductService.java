@@ -12,4 +12,5 @@ public interface ProductService {
     List<ProductDTO> findAllProduct(); // 전체상품 조회
     List<ProductDTO> findProductsByType(int prodType); // 추가된 메소드
     ProductDTO findProductById(Long prodNo); // 상품 ID로 조회하는 메소드 추가
+    void modifyProduct(ProductDTO productDTO); // 상품 수정
 }

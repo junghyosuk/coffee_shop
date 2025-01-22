@@ -68,6 +68,31 @@ public class ProductServiceImpl implements ProductService {
                 .orElse(null); // 상품이 없으면 null 반환
     }
 
+    @Override
+    public void modifyProduct(ProductDTO productDTO) {
+        try {
+            // 메인이미지 저장
+            String mainImageName = productDTO.getProdImage1Name(); // 기본값: 기존 이미지 이름
+            if (productDTO.getProdImage1() != null && !productDTO.getProdImage1().isEmpty()) {
+                mainImageName = saveFile(productDTO.getProdImage1()); // 새 이미지 업로드
+            }
+
+            // 서브이미지 저장
+            String subImageName = productDTO.getProdImage2Name(); // 기본값: 기존 이미지 이름
+            if (productDTO.getProdImage2() != null && !productDTO.getProdImage2().isEmpty()) {
+                subImageName = saveFile(productDTO.getProdImage2()); // 새 이미지 업로드
+            }
+
+            // DTO → Entity 변환 후 저장
+            ProductEntity productEntity = productDTO.toEntity(mainImageName, subImageName);
+            productRepository.save(productEntity);
+        } catch (IOException e) {
+            throw new RuntimeException("파일 처리 실패", e);
+        }
+
+
+    }
+
     // 파일 저장 로직
     private String saveFile(MultipartFile file) throws IOException {
         if (file != null && !file.isEmpty()) {

@@ -38,6 +38,27 @@ public class AdminProductController {
         return "redirect:/admin/product";
     }
 
+    // 상품 수정 페이지
+    @GetMapping("/product/modify/{prodNo}")
+    public String modifyProductForm(@PathVariable Long prodNo, Model model) {
+        ProductDTO productDTO = productService.findProductById(prodNo);
+        model.addAttribute("product", productDTO);
+        return "/view/admin/product_modify";
+    }
 
+    @PostMapping("/product/modify")
+    public String modifyProduct(@ModelAttribute ProductDTO productDTO) {
+
+        // 기존 이미지를 유지하기 위한 처리
+        if (productDTO.getProdImage1() == null || productDTO.getProdImage1().isEmpty()) {
+            productDTO.setProdImage1Name(productService.findProductById(productDTO.getProdNo()).getProdImage1Name());
+        }
+        if (productDTO.getProdImage2() == null || productDTO.getProdImage2().isEmpty()) {
+            productDTO.setProdImage2Name(productService.findProductById(productDTO.getProdNo()).getProdImage2Name());
+        }
+
+        productService.modifyProduct(productDTO);
+        return "redirect:/admin/product";
+    }
 
 }
