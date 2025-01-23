@@ -1,6 +1,7 @@
 package springboot.webproject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +14,10 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService{
 
+    @Autowired
     private final UsersRepository usersRepository;
+
+    @Autowired
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -25,6 +29,7 @@ public class UserServiceImpl implements UserService{
         this.usersRepository = usersRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
 
     @Override
     @Transactional
@@ -80,5 +85,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public Optional<UsersDTO> loginId(String usersId) {
         return usersRepository.findByUsersId(usersId);
+    }
+
+    @Override
+    public UsersDTO findUserByUsersId(String usersId) {
+        return usersRepository.findUserByUsersId(usersId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + usersId));
     }
 }

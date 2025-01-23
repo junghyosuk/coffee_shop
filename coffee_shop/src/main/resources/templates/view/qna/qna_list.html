@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{/layout/layout}">
+<head>
+    <title>QnA List</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div id="qna_list">
+        <h2>QnA (Total: [[${qnaList != null ? qnaList.totalElements : 0}]])</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>글번호</th>
+                <th>제목</th>
+                <th>내용</th>
+                <th>작성자 이름</th>
+                <th>작성자 이메일</th>
+                <th>작성일</th>
+                <th>문의 유형</th>
+                <th>상태</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="qna : ${qnaList.content}">
+                <td th:text="${qna.qnaNo}"></td>
+                <td>
+                    <a th:if="${qna.qnaNo != null}"
+                       th:href="@{/user/qna/detail(qnaNo=${qna.qnaNo}, pageNum=${currentPage}, pageSize=${pageSize})}"
+                       th:text="${qna.qnaTitle}"></a>
+                    <span th:if="${qna.qnaNo == null}" th:text="QnA ID not available"></span>
+                </td>
+                <td th:text="${qna.qnaContent}"></td>
+                <td th:text="${qna.users.usersName}"></td> <!-- 작성자 이름 -->
+                <td th:text="${qna.users.usersEmail}"></td> <!-- 작성자 이메일 -->
+                <!--                <td th:text="${#dates.format(qna.qnaDate, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+                <!--                <td th:text="${qna.qnaDate"></td>-->
+
+                <td th:text="${qna.qnaDate != null ? #temporals.format(qna.qnaDate, 'yyyy-MM-dd HH:mm:ss') : '날짜 없음'}"></td>
+                <td th:text="${qna.qnaType}"></td>
+                <td th:text="${qna.qnaStatus == 1 ? '미답변' : '답변완료'}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <a href="qna/create" th:href="@{qna/create}" class="link_nav">QNAWrite</a>
+
+
+        <!-- Pagination -->
+        <div id="pagination">
+            <!-- 이전 페이지 -->
+            <span th:if="${currentPage > 1}">
+                <a th:href="@{/user/qna(pageNum=${currentPage - 1}, pageSize=${pageSize})}">Previous</a>
+            </span>
+
+            <!-- 페이지 번호 -->
+            <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                <a th:href="@{/user/qna(pageNum=${i}, pageSize=${pageSize})}"
+                   th:text="${i}"
+                   th:classappend="${i == currentPage} ? 'current' : ''"></a>
+            </span>
+
+            <!-- 다음 페이지 -->
+            <span th:if="${currentPage < totalPages}">
+                <a th:href="@{/user/qna(pageNum=${currentPage + 1}, pageSize=${pageSize})}">Next</a>
+            </span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

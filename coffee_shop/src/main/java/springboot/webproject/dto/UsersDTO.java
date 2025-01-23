@@ -42,6 +42,7 @@ SELECT * FROM USERS;
 public class UsersDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USERS_NO") // 데이터베이스 컬럼 이름과 매핑
     private int usersNo;
     private String usersId;
     private String usersPw;

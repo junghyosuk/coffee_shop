@@ -1,0 +1,66 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{/layout/layout}">-->
+<!--<head>-->
+<!--    <title>QNA Detail</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div layout:fragment="content">-->
+<!--    <h1>질문 상세</h1>-->
+<!--    <div>-->
+<!--        <h2 th:text="${qna.qnaTitle}"></h2>-->
+<!--        <p th:text="${qna.qnaContent}"></p>-->
+<!--        <p>작성일: <span th:text="${qna.qnaDate}"></span></p>-->
+<!--    </div>-->
+<!--    &lt;!&ndash;  리턴 페이지 &ndash;&gt;-->
+<!--    <a th:href="@{/user/qna(pageNum=${currentPage}, pageSize=${pageSize})}">목록으로</a>-->
+<!--    &lt;!&ndash;<a href="/user/notices">목록으로</a>&ndash;&gt;-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<head>
+    <title>QNA Detail</title>
+    <script>
+        function toggleAnswerForm() {
+            const answerForm = document.getElementById('answerForm');
+            answerForm.style.display = (answerForm.style.display === 'none') ? 'block' : 'none';
+        }
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>질문 상세</h1>
+    <div>
+        <h2 th:text="${qna.qnaTitle}"></h2>
+        <p th:text="${qna.qnaContent}"></p>
+        <p>작성일: <span th:text="${qna.qnaDate}"></span></p>
+    </div>
+
+    <!-- 답변 추가 버튼 -->
+    <button onclick="toggleAnswerForm()">답변 추가</button>
+
+    <!-- 답변 폼 (숨겨져 있다가 버튼 클릭 시 보임) -->
+    <div id="answerForm" style="display:none;">
+        <form th:action="@{/qna/answer/{qnaNo}(qnaNo=${qna.qnaNo})}" th:method="post">
+            <textarea name="content" required></textarea><br>
+            <button type="submit">답변 등록</button>
+        </form>
+    </div>
+
+    <!-- 답변 목록 -->
+    <h2>답변 목록</h2>
+    <div th:each="answer : ${answers}">
+        <p th:text="${answer.content}"></p>
+        <p th:text="${answer.createdDate}"></p>
+    </div>
+
+    <!-- 리턴 페이지 -->
+    <a th:href="@{/user/qna(pageNum=${currentPage}, pageSize=${pageSize})}">목록으로</a>
+</div>
+</body>
+</html>

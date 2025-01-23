@@ -5,17 +5,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import springboot.webproject.dto.NoticeDTO;
+import springboot.webproject.dto.UsersDTO;
 import springboot.webproject.service.NoticeService;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user")
+//@RequestMapping("/user")
 public class NoticeController {
     private final NoticeService noticeService;
 
@@ -29,7 +30,22 @@ public class NoticeController {
 //        model.addAttribute("notices",notices);
 //        return "view/notice/notice_list";
 //    }
-    @GetMapping("/notices")
+// 글을 쓰기- 온니 admin 만 가능함
+    @GetMapping("/admin/create")
+    public String showCreateUserForm(Model model) {
+        model.addAttribute("notice", new NoticeDTO());
+        return "view/notice/create_notice"; // This maps to create_user.html
+    }
+    @PostMapping("/admin/create")
+    public ModelAndView createUser(@ModelAttribute NoticeDTO notice) {
+
+
+        noticeService.createNotice(notice); // Save the user using the service
+        notice.setNoticeDate(String.valueOf(LocalDateTime.now())); //
+        return new ModelAndView("redirect:/admin/create?success=true");
+    }
+
+    @GetMapping("/user/notices")
     public String getNotices(
             @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "size", defaultValue = "10") int size,
@@ -46,7 +62,7 @@ public class NoticeController {
         model.addAttribute("pageSize", size);
         return "view/notice/notice_list";
     }
-    @GetMapping("/notices/detail")
+    @GetMapping("/user/notices/detail")
     public String getNoticeDetail(@RequestParam("noticeNo") int noticeNo,
                                   @RequestParam("pageNum") int pageNum,
                                   @RequestParam("pageSize") int pageSize,

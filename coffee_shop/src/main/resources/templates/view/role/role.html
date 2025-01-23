@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roles Management</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Roles Management</h1>
+
+    <!-- Add Role Form -->
+    <form th:action="@{/roles/add}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <label for="roleName">Add New Role:</label>
+        <input type="text" id="roleName" name="roleName" required>
+        <button type="submit">Add Role</button>
+    </form>
+
+    <h2>Existing Roles</h2>
+    <!-- Roles List -->
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Role ID</th>
+            <th>Role Name</th>
+            <th>Select to Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Assume 'roles' is a list of Role objects passed from the controller -->
+        <!-- Example: roles = [{roleId: 1, roleName: 'Admin'}, {roleId: 2, roleName: 'User'}] -->
+        <tr th:each="role : ${roles}">
+            <td th:text="${role.id}"></td>
+            <td th:text="${role.roleName}"></td>
+            <td>
+                <!-- Populate form fields with selected role data -->
+                <button type="button" th:attr="onclick=|populateUpdateForm('${role.id}', '${role.roleName}')|">
+                    Select
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Update Selected Role</h2>
+    <form th:action="@{/roles/update}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <label for="id">Role ID:</label>
+        <input type="number" id="id" name="id" readonly required>
+        <label for="roleNameUpdate">New Role Name:</label>
+        <input type="text" id="roleNameUpdate" name="roleName" required>
+        <button type="submit">Update Role</button>
+    </form>
+
+    <script>
+        function populateUpdateForm(id, roleName) {
+            document.getElementById('id').value = id;
+            document.getElementById('roleNameUpdate').value = roleName;
+        }
+    </script>
+</div>
+</body>
+</html>

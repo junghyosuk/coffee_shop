@@ -8,11 +8,14 @@ import springboot.webproject.repository.UsersRepository;
 
 import java.util.Optional;
 
-@Service
+
 public interface UserService {
+
+
 
     UsersDTO createUser(UsersDTO user); // 회원가입
     Optional<UsersDTO> login(String usersId, String usersPw); // 로그인
     Optional<UsersDTO> loginId(String usersId);
-
+    // 추가: username으로 사용자 검색
+    UsersDTO findUserByUsersId(String usersId);
 }
