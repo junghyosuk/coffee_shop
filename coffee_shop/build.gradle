@@ -27,7 +27,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'// 시큐리티
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5:3.1.1.RELEASE' //시큐리티를 사용 하기위해 사용
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6' //시큐리티를 사용 하기위해 사용
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 	implementation 'org.springframework.security:spring-security-crypto' // 암호화
 	compileOnly 'org.projectlombok:lombok'

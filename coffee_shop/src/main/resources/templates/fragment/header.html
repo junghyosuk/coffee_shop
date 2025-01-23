@@ -11,12 +11,17 @@
     <div class="top_header">
         <div class="inner_top">
             <ul class="list_top">
-                <li><a href="/login" th:href="@{/login}" class="link_top">로그인</a></li>
-                <li sec:authorize="isAnonymous()">
+                <li sec:authorize="isAnonymous()"><a href="/login" th:href="@{/login}" class="link_top">로그인</a></li>
+                <li sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit">로그아웃</button>
+                    </form>
+                </li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')">
                     <a href="/roles" th:href="@{/roles}" class="link_top">roles</a>
                 </li>
                 <li><a href="/signup" th:href="@{/users/create}" class="link_top">회원가입</a></li>
-                <li sec:authorize="isAuthenticated()">환영합니다</li>
+                <li sec:authorize="isAuthenticated()" th:text="${#authentication.principal.username} + '님, 환영합니다.'">환영합니다</li>
             </ul>
         </div>
     </div>
