@@ -25,6 +25,22 @@ $(document).ready(function() {
         const prodNo = $(this).data('prod-no');
         window.location.href = "/admin/product/modify/"+prodNo; // URL 결합
     });
+
+    /* 상품 뷰 */
+    // 상품 가격을 가져옴 (천 단위 구분 제거)
+    const pricePerUnit = parseInt($('.num_price').text().replace(/,/g, ''));
+
+    // 수량 입력 값 변경 시 이벤트
+    $('#quantity').change(function() {
+        // 현재 수량 값을 가져옴
+        const quantity = parseInt($(this).val());
+        // 총 금액 계산
+        const totalPrice = pricePerUnit * quantity;
+        // 총 금액을 업데이트
+        $(".total_price .num_price").text(totalPrice.toLocaleString()); // 천 단위로 포맷팅
+    });
+
+
 });
 
 

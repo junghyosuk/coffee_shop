@@ -9,7 +9,9 @@ import org.springframework.web.server.ResponseStatusException;
 import springboot.webproject.dto.ProductDTO;
 import springboot.webproject.service.ProductService;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/product")
@@ -35,7 +37,12 @@ public class ProductController {
         if (product == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "상품을 찾을 수 없습니다.");
         }
+        // 가격 포맷팅
+        NumberFormat formatter = NumberFormat.getInstance(Locale.KOREA);
+        String formattedPrice = formatter.format(product.getProdPrice());
+
         model.addAttribute("product", product);
+        model.addAttribute("formattedPrice", formattedPrice); // 포맷된 가격 추가
         return "/view/product/coffeebean_view";
     }
 

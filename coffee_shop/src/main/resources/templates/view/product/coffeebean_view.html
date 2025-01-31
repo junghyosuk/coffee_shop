@@ -10,56 +10,60 @@
 <!-- layout.html에서 content 영역에 삽입될 내용 -->
 <div layout:fragment="content">
     <h2 class="tit_main">상품 상세</h2>
-    <div class="product_info">
-        <span class="wrap_img"><img src="/product_images/product_coffee1.jpg" th:src="@{/product_images/{imageName}(imageName=${product.prodImage1Name})}" class="img_product" alt=""></span>
-        <div class="cont_info">
-            <strong class="name_product" th:text="${product.prodName}">과테말라 안티구아 SHB 산미없는 고소한 당일로스팅 커피 원두홀빈 200g</strong>
-            <strong class="price_product" th:text="${product.prodPrice}">8,300원</strong>
-            <dl class="list_delivery">
-                <dt>국내·해외배송</dt>
-                <dd>국내배송</dd>
-                <dt>배송방법</dt>
-                <dd>택배</dd>
-                <dt>배송비</dt>
-                <dd>3,000원 (40,000원 이상 구매 시 무료)</dd>
+    <div class="row product_info">
+        <div class="col-md-6">
+            <span class="wrap_img">
+                <img src="/product_images/product_coffee1.jpg" th:src="@{/product_images/{imageName}(imageName=${product.prodImage1Name})}" class="img_product" alt="">
+            </span>
+        </div>
+        <div class="col-md-6 cont_info">
+            <strong class="name_product h5" th:text="${product.prodName}">과테말라 안티구아 SHB 산미없는 고소한 당일로스팅 커피 원두홀빈 200g</strong>
+            <strong class="price_product h4"><span th:text="${formattedPrice}">8,300</span>원</strong>
+            <dl class="list_delivery mt-3">
+                <dt class="font-weight-bold">국내·해외배송</dt>
+                <dd class="mb-2">국내배송</dd>
+                <dt class="font-weight-bold">배송방법</dt>
+                <dd class="mb-2">택배</dd>
+                <dt class="font-weight-bold">배송비</dt>
+                <dd class="mb-2">3,000원</dd>
             </dl>
 
             <dl class="list_option">
                 <dt>주문수량</dt>
-                <dd>
-                    <button>+</button>
-                    <input type="text"/>
-                    <button>-</button>
+                <dd class="d-flex align-items-center">
+<!--                    <button class="btn btn-outline-secondary" type="button">+</button>-->
+<!--                    <input type="text" class="form-control mx-2" style="width: 60px;" value="1"/>-->
+<!--                    <button class="btn btn-outline-secondary" type="button">-</button>-->
+                    <input type="number" id="quantity" class="form-control" min="1" value="1">
                 </dd>
-<!--                <dt>용량선택</dt>-->
-<!--                <dd>-->
-<!--                    <select name="" id="">-->
-<!--                        <option value="">홀빈</option>-->
-<!--                        <option value="">프렌치프레소</option>-->
-<!--                    </select>-->
-<!--                </dd>-->
             </dl>
-            <div class="total_price">
-                <span class="txt_info">총 상품금액</span>
-                <span class="txt_price">0원</span>
+            <div class="total_price mb-3">
+                <span class="txt_info font-weight-bold">총 상품금액:</span>
+                <span class="txt_price ml-2"><span class="num_price" th:text="${product.prodPrice}">10000</span>원</span>
             </div>
             <div class="wrap_btn">
-                <a href="#">바로구매</a>
-                <a href="#">장바구니</a>
-                <a href="#">좋아요</a>
+                <a href="#" class="btn btn-primary">바로구매</a>
+                <a href="" class="btn btn-success">장바구니</a>
             </div>
-
         </div>
     </div>
-    <ul class="list_info">
-        <li><a href="#">상세정보</a></li>
-        <li><a href="#">반품/교환정보</a></li>
-        <li><a href="#">리뷰</a></li>
+    <ul class="list_info nav nav-tabs mt-4">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">상세정보</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">반품/교환정보</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">리뷰</a>
+        </li>
     </ul>
-    <div class="detail_info">
-        <img src="" alt="">
-        <img src="" alt="">
-        <img src="" alt="">
+
+    <div class="detail_info mt-3">
+        <img src="/product_images/product_coffee1.jpg" th:src="@{/product_images/{imageName}(imageName=${product.prodImage2Name})}" alt="상세 이미지 1" class="img-fluid mb-2">
+        <div class="detail_prod">
+            <pre th:text="${product.prodInfo}"></pre>
+        </div>
     </div>
 </div>
 </body>

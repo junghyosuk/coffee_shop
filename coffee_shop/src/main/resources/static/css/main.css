@@ -1,6 +1,12 @@
 @charset "utf-8";
 
+/* 로고 */
+.link_logo{display:block;width:200px;}
+
 /* 상품리스트 공통 */
+.cont_main .wrap_product{width:1024px;margin:50px auto 0;}
+.cont_main .wrap_product .tit_product{margin-bottom:40px;text-align:center;}
+/* 부트스트랩 적용으로 인해 삭제(25-01-31)
 .list_product:after{display:block;clear:both;content:'';}
 .list_product li{float:left;width:25%;height:350px;padding-bottom:25px;text-align:center;}
 .list_product li:first-child{margin-left:0}
@@ -12,10 +18,21 @@
 .list_product .wrap_img{display:block;overflow:hidden;width:244px;height:244px;overflow:hidden;}
 .list_product .img_product{transition-property:transform;transition-duration:0.2s;}
 .list_product .link_product:hover .img_product{transform:scale(1.1)}
-
-
+*/
+.card{transition: transform 0.2s, box-shadow 0.2s;}
+.card:hover{transform: scale(1.05);box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);}
+.list_product .name_product{overflow:hidden;display:block;max-height:44px;font-size:15px;color:#333;text-overflow:ellipsis;display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;word-break: break-word;}
 
 /* 상품관리 */
 .tbl_admin{width:100%;border-collapse:collapse;text-align:center;table-layout:fixed;}
 .tbl_admin th{padding:6px 0;border:1px solid #000;box-sizing:border-box;font-size:14px;background-color:#ccc;}
 .tbl_admin td{overflow:hidden;padding:6px 0;border:1px solid #000;box-sizing:border-box;}
+
+/* 상품상셰 */
+.img_product{width:100%;}
+
+/* 장바구니 */
+.tbl_cart .img_prod{width:100px;margin-right:20px;}
+.tbl_cart th, .tbl_cart td{position:relative;}
+.tbl_cart .form-check{position:absolute;top:50%;margin-top:-16px;}
+.tbl_cart td span{display:block;text-align:center;padding-top:34px;}
