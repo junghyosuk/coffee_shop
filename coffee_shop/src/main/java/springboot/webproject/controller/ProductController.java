@@ -58,6 +58,21 @@ public class ProductController {
         return "/view/product/coldbrew_list";
     }
 
+    //coldbrew view 페이지
+    @GetMapping("/coldbrew/view/{prodNo}")
+    public String coldbrewView(@PathVariable("prodNo") Long prodNo, Model model) {
+        ProductDTO product = productService.findProductById(prodNo);
+        if (product == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "상품을 찾을 수 없습니다.");
+        }
+        // 가격 포맷팅
+        NumberFormat formatter = NumberFormat.getInstance(Locale.KOREA);
+        String formattedPrice = formatter.format(product.getProdPrice());
+
+        model.addAttribute("product", product);
+        model.addAttribute("formattedPrice", formattedPrice); // 포맷된 가격 추가
+        return "/view/product/coldbrew_view";
+    }
 
 
 

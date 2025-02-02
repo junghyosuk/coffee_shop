@@ -20,7 +20,7 @@ address,caption,cite,code,dfn,em,var {font-style:normal;font-weight:normal}
 
 /* header */
 .wrap_header{border-bottom:1px solid #eee;}
-.top_header{border-bottom:1px solid #eee;}
+.top_header{border-bottom:1px solid #eee;background-color:#fefefe;}
 .top_header .inner_top{width:1024px;margin:0 auto;text-align:right;}
 .list_top{padding:6px 0;}
 .list_top li{display:inline-block;}

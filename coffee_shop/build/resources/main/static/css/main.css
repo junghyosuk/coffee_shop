@@ -25,8 +25,10 @@
 
 /* 상품관리 */
 .tbl_admin{width:100%;border-collapse:collapse;text-align:center;table-layout:fixed;}
-.tbl_admin th{padding:6px 0;border:1px solid #000;box-sizing:border-box;font-size:14px;background-color:#ccc;}
-.tbl_admin td{overflow:hidden;padding:6px 0;border:1px solid #000;box-sizing:border-box;}
+.tbl_admin th{padding:6px 0;border:1px solid #eee;box-sizing:border-box;text-align:center;font-size:14px;background-color:#ccc;vertical-align:middle;}
+.tbl_admin td{overflow:hidden;padding:6px 0;border:1px solid #eee;box-sizing:border-box;font-size:12px;vertical-align:middle;}
+.tbl_admin td .btn{padding:4px;font-size:11px;}
+.add_product{display:none;border-bottom:1px solid #eee;}
 
 /* 상품상셰 */
 .img_product{width:100%;}

@@ -32,8 +32,8 @@
        <div class="list_product row">
            <div class="col-lg-3 col-md-4 col-sm-6 mb-4" th:each="product : ${productList}">
                <div class="card text-center">
-                   <a th:href="@{/product/coffeebean/view/{prodNo}(prodNo=${product.prodNo})}" class="link_product">
-                       <div class="wrap_img">
+                   <a th:href="${product.prodType == 1 ? '/product/coffeebean/view/' + product.prodNo : '/product/coldbrew/view/' + product.prodNo}" class="link_product">
+                   <div class="wrap_img">
                            <img th:src="@{/product_images/{prodImage}(prodImage=${product.prodImage1Name})}" class="card-img-top img_product" alt="">
                        </div>
                        <div class="card-body">

@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import springboot.webproject.dto.ProductDTO;
 import springboot.webproject.service.ProductService;
 
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("/admin")

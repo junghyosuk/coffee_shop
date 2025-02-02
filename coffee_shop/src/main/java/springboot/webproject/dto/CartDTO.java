@@ -1,6 +1,9 @@
 package springboot.webproject.dto;
 
 
+import jakarta.persistence.*;
+import lombok.*;
+
 /*
 CREATE TABLE CARTLIST (
    CART_NO NUMBER CONSTRAINT CART_NO_PK PRIMARY KEY,
@@ -18,60 +21,27 @@ CART_USERS_ID          VARCHAR2(20)
 CART_PROD_NO           NUMBER
 CART_QUANTITY          NUMBER(20)
  */
-//@Entity
+@Entity
+@Table(name="cartlist")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CartDTO {
-    //@Id
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cartNo;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long cartNo;
+
+    @Column(name = "cart_users_id")
     private String cartusersId;
+
+    @Column(name = "cart_prod_no")
     private int cartproductNo;
+
+    @Column(name = "cart_quantity")
     private int cartQuantity;
 
-    public CartDTO() {
-        // TODO Auto-generated constructor stub
-    }
-
-    public CartDTO(int cartNo, String cartusersId, int cartproductNo, int cartQuantity) {
-        super();
-        this.cartNo = cartNo;
-        this.cartusersId = cartusersId;
-        this.cartproductNo = cartproductNo;
-        this.cartQuantity = cartQuantity;
-    }
-
-    public int getCartNo() {
-        return cartNo;
-    }
-
-    public void setCartNo(int cartNo) {
-        this.cartNo = cartNo;
-    }
-
-    public String getCartusersId() {
-        return cartusersId;
-    }
-
-    public void setCartusersId(String cartusersId) {
-        this.cartusersId = cartusersId;
-    }
-
-    public int getCartproductNo() {
-        return cartproductNo;
-    }
-
-    public void setCartproductNo(int cartproductNo) {
-        this.cartproductNo = cartproductNo;
-    }
-
-    public int getCartQuantity() {
-        return cartQuantity;
-    }
-
-    public void setCartQuantity(int cartQuantity) {
-        this.cartQuantity = cartQuantity;
-    }
-
-
-
-
+    @Transient
+    private ProductDTO product;  // 장바구니에서 상품 정보 표시용
 }
