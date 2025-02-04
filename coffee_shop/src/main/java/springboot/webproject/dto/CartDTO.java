@@ -3,6 +3,7 @@ package springboot.webproject.dto;
 
 import jakarta.persistence.*;
 import lombok.*;
+import springboot.webproject.entity.ProductEntity;
 
 /*
 CREATE TABLE CARTLIST (
@@ -21,27 +22,63 @@ CART_USERS_ID          VARCHAR2(20)
 CART_PROD_NO           NUMBER
 CART_QUANTITY          NUMBER(20)
  */
+
 @Entity
-@Table(name="cartlist")
+@Table(name = "cartlist")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class CartDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cartNo;
+    private int cartNo;
 
-    @Column(name = "cart_users_id")
-    private String cartusersId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CART_USERS_ID", referencedColumnName = "USERS_ID")
+    private UsersDTO users;
 
-    @Column(name = "cart_prod_no")
-    private int cartproductNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CART_PROD_NO", referencedColumnName = "PROD_NO")
+    private ProductEntity product;
 
-    @Column(name = "cart_quantity")
     private int cartQuantity;
 
-    @Transient
-    private ProductDTO product;  // 장바구니에서 상품 정보 표시용
+    // 장바구니 상태 (0: 장바구니, 1: 주문완료)
+    private int status;
+
+    public CartDTO() {
+    }
+
+    public CartDTO(int cartNo, UsersDTO users, ProductEntity product, int cartQuantity, int status) {
+        this.cartNo = cartNo;
+        this.users = users;
+        this.product = product;
+        this.cartQuantity = cartQuantity;
+        this.status = status;
+    }
 }
+
+
+//@Entity
+//@Table(name="cartlist")
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Builder
+//public class CartDTO {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long cartNo;
+//
+//    @Column(name = "cart_users_id")
+//    private String cartusersId;
+//
+//    @Column(name = "cart_prod_no")
+//    private int cartproductNo;
+//
+//    @Column(name = "cart_quantity")
+//    private int cartQuantity;
+//
+//    @Transient
+//    private ProductDTO product;  // 장바구니에서 상품 정보 표시용
+//}

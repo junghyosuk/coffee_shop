@@ -35,9 +35,7 @@
                 </td>
                 <td>
                     <div class="d-flex align-items-center">
-                        <!-- ✅ 상품 이미지 표시 -->
-                        <img th:src="@{/product_images/{imageName}(imageName=${item.product.prodImage1Name})}" class="mr-2 img_prod" alt="상품 이미지">
-                        <!-- ✅ 상품명 표시 -->
+                        <img th:src="@{/product_images/{imageName}(imageName=${item.product.prodImage1})}" class="mr-2 img_prod" alt="상품 이미지">
                         <span th:text="${item.product.prodName}">상품명</span>
                     </div>
                 </td>
@@ -45,14 +43,12 @@
                     <input type="number" class="form-control mt-4" th:value="${item.cartQuantity}" min="1">
                 </td>
                 <td>
-                    <!-- ✅ 가격 계산 -->
                     <span th:text="${item.cartQuantity * item.product.prodPrice} + '원'">상품금액</span>
                 </td>
                 <td>
-                    <span>3,000원</span> <!-- 고정 배송비 -->
+                    <span>3,000원</span>
                 </td>
                 <td>
-                    <!-- ✅ 삭제 버튼 -->
                     <button class="btn btn-danger btn-delete" th:data-cart-no="${item.cartNo}">삭제</button>
                 </td>
             </tr>

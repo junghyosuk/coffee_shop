@@ -10,15 +10,28 @@ NOTICE_CONTENT          VARCHAR2(2000)
 NOTICE_STATUS           NUMBER(1)
 NOTICE_DATE             DATE   */
 
-/*CREATE TABLE NOTICE(NOTICE_NO NUMBER PRIMARY KEY, NOTICE_TITLE VARCHAR2(1000), NOTICE_CONTENT
-VARCHAR2(2000), NOTICE_STATUS NUMBER(1), NOTICE_DATE DATE);
-
-create sequence NOTICE; */
+/*
+// 이걸로 다시 MySQL 만드세요.
+ CREATE TABLE NOTICE (
+    NOTICE_NO INT AUTO_INCREMENT PRIMARY KEY,
+    NOTICE_TITLE VARCHAR(255),
+    NOTICE_CONTENT TEXT,
+    NOTICE_STATUS TINYINT,
+    NOTICE_DATE DATETIME DEFAULT CURRENT_TIMESTAMP
+); */
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "notice")//
+@Getter
+@Setter
 public class NoticeDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +39,10 @@ public class NoticeDTO {
     private String noticeTitle;
     private String noticeContent;
     private int noticeStatus;
-    private String noticeDate;
+    @Column(name = "NOTICE_DATE")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime noticeDate;
+
 
     public NoticeDTO() {
         // TODO Auto-generated constructor stub
@@ -38,49 +54,49 @@ public class NoticeDTO {
         this.noticeTitle = noticeTitle;
         this.noticeContent = noticeContent;
         this.noticeStatus = noticeStatus;
-        this.noticeDate = noticeDate;
+        this.noticeDate = LocalDateTime.parse(noticeDate);
     }
 
-    public int getNoticeNo() {
-        return noticeNo;
-    }
-
-    public void setNoticeNo(int noticeNo) {
-        this.noticeNo = noticeNo;
-    }
-
-    public String getNoticeTitle() {
-        return noticeTitle;
-    }
-
-    public void setNoticeTitle(String noticeTitle) {
-        this.noticeTitle = noticeTitle;
-    }
-
-    public String getNoticeContent() {
-        return noticeContent;
-    }
-
-    public void setNoticeContent(String noticeContent) {
-        this.noticeContent = noticeContent;
-    }
-
-    public int getNoticeStatus() {
-        return noticeStatus;
-    }
-
-    public void setNoticeStatus(int noticeStatus) {
-        this.noticeStatus = noticeStatus;
-    }
-
-    public String getNoticeDate() {
-        return noticeDate;
-    }
-
-    public void setNoticeDate(String noticeDate) {
-        this.noticeDate = noticeDate;
-    }
-
+//    public int getNoticeNo() {
+//        return noticeNo;
+//    }
+//
+//    public void setNoticeNo(int noticeNo) {
+//        this.noticeNo = noticeNo;
+//    }
+//
+//    public String getNoticeTitle() {
+//        return noticeTitle;
+//    }
+//
+//    public void setNoticeTitle(String noticeTitle) {
+//        this.noticeTitle = noticeTitle;
+//    }
+//
+//    public String getNoticeContent() {
+//        return noticeContent;
+//    }
+//
+//    public void setNoticeContent(String noticeContent) {
+//        this.noticeContent = noticeContent;
+//    }
+//
+//    public int getNoticeStatus() {
+//        return noticeStatus;
+//    }
+//
+//    public void setNoticeStatus(int noticeStatus) {
+//        this.noticeStatus = noticeStatus;
+//    }
+//
+//    public LocalDateTime getNoticeDate() {
+//        return noticeDate;
+//    }
+//
+//    public void setNoticeDate(String noticeDate) {
+//        this.noticeDate = LocalDateTime.parse(noticeDate);
+//    }
+//
 
 
 }

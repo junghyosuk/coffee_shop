@@ -45,7 +45,7 @@
                 <a href="#" class="btn btn-primary">바로구매</a>
                 <form th:action="@{/cart/add}" method="post">
                     <input type="hidden" name="prodNo" th:value="${product.prodNo}" />
-                    <input type="hidden" name="quantity" id="cartQuantity" value="1">
+                    <input type="hidden" name="cartQuantity" id="cartQuantity" value="1">
                     <button type="submit" class="btn btn-success">장바구니</button>
                 </form>
             </div>

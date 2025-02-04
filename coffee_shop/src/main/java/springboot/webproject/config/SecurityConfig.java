@@ -26,8 +26,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authz) -> authz
-                                .requestMatchers("/", "/login", "/users/**", "/css/**", "/js/**", "/images/**", "/product_images/**", "/roles/**", "/product/**", "/cart/**").permitAll() // 인증 없이 접근 가능
-                                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN") // ROLE_USER만 접근 허용 - 로그인 된 유저
+                                .requestMatchers("/", "/login", "/users/**", "/css/**", "/js/**", "/images/**", "/product_images/**", "/roles/**", "/product/**").permitAll() // 인증 없이 접근 가능
+                                .requestMatchers("/user/**", "/cart/**").hasAnyRole("USER", "ADMIN") // ROLE_USER만 접근 허용 - 로그인 된 유저
                                 .requestMatchers("/**").hasRole("ADMIN") // ROLE_ADMIN만 접근 허용
 //                        .requestMatchers("/**").hasAuthority("ROLE_ADMIN")
 //                        .requestMatchers("/user/**").hasAuthority("ROLE_USER")

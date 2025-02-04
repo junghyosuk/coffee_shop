@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PROD_NO")
     private Long prodNo; // 제품 번호
 
     @Column(length = 1)

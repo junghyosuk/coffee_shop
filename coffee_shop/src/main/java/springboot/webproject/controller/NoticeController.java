@@ -40,12 +40,13 @@ public class NoticeController {
     public ModelAndView createUser(@ModelAttribute NoticeDTO notice) {
 
 
-        noticeService.createNotice(notice); // Save the user using the service
-        notice.setNoticeDate(String.valueOf(LocalDateTime.now())); //
+        noticeService.createNotice(notice);
+        notice.setNoticeDate(LocalDateTime.now());// Save the user using the service
+//    notice.setNoticeDate(LocalDateTime.parse(String.valueOf(LocalDateTime.now()))); //
         return new ModelAndView("redirect:/admin/create?success=true");
     }
 
-    @GetMapping("/user/notices")
+    @GetMapping("/notices")
     public String getNotices(
             @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "size", defaultValue = "10") int size,
@@ -62,7 +63,7 @@ public class NoticeController {
         model.addAttribute("pageSize", size);
         return "view/notice/notice_list";
     }
-    @GetMapping("/user/notices/detail")
+    @GetMapping("/notices/detail")
     public String getNoticeDetail(@RequestParam("noticeNo") int noticeNo,
                                   @RequestParam("pageNum") int pageNum,
                                   @RequestParam("pageSize") int pageSize,

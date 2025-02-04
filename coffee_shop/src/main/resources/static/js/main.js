@@ -57,12 +57,25 @@ $(document).ready(function() {
     });
 
     // 선택한 상품 삭제
-    $(".btn-delete").click(function () {
-        let cartNo = $(this).data("cart-no");
-        if (confirm("해당 상품을 삭제하시겠습니까?")) {
-            location.href = "/cart/remove/" + cartNo;
-        }
-    });
+//    $(".btn-delete").click(function () {
+//        let cartNo = $(this).data("cart-no");
+//            if (confirm("해당 상품을 삭제하시겠습니까?")) {
+//                $.ajax({
+//                    url: "/cart/delete",
+//                    type: "POST",
+//                    data: { cartNo: cartNo },
+//                    beforeSend: function(xhr) {
+//                        xhr.setRequestHeader("X-CSRF-TOKEN", $('meta[name="_csrf"]').attr('content'));
+//                    },
+//                    success: function() {
+//                        location.reload();
+//                    },
+//                    error: function() {
+//                        alert("삭제 중 오류가 발생했습니다. 다시 시도해 주세요.");
+//                    }
+//                });
+//            }
+//    });
 
     // 전체 합계 계산
     function updateTotalPrice() {
