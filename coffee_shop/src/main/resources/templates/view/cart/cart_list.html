@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>장바구니</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 추가 -->
 </head>
 <body>
 <div layout:fragment="content">
@@ -21,8 +22,8 @@
                 </th>
                 <th class="text-center">상품 정보</th>
                 <th class="text-center" style="width:10%">수량</th>
-                <th class="text-center" style="width:15%">상품금액</th>
-                <th class="text-center" style="width:15%">배송비</th>
+                <th class="text-center" style="width:15%">상품금액(원)</th>
+                <th class="text-center" style="width:15%">배송비(원)</th>
                 <th class="text-center" style="width:10%">삭제</th>
             </tr>
             </thead>
@@ -40,13 +41,13 @@
                     </div>
                 </td>
                 <td>
-                    <input type="number" class="form-control mt-4" th:value="${item.cartQuantity}" min="1">
+                    <input type="number" class="form-control mt-4 cart-quantity" th:value="${item.cartQuantity}" min="1" th:data-prod-price="${item.product.prodPrice}">
                 </td>
                 <td>
-                    <span th:text="${item.cartQuantity * item.product.prodPrice} + '원'">상품금액</span>
+                    <span class="product-price" th:text="${item.product.prodPrice}">상품금액</span>
                 </td>
                 <td>
-                    <span>3,000원</span>
+                    <span class="product-price">3000</span>
                 </td>
                 <td>
                     <button class="btn btn-danger btn-delete" th:data-cart-no="${item.cartNo}">삭제</button>
@@ -68,32 +69,18 @@
     <div class="mt-4 bg-light p-3 rounded">
         <h5>주문 요약</h5>
         <div class="d-flex justify-content-between">
-            <span>총 상품금액:</span>
-            <span th:text="${#aggregates.sum(cartItems.![cartQuantity * product.prodPrice])} + '원'">0원</span>
+            <span>총 상품금액(원):</span>
+            <span id="total-price" class="product-price">20000</span>
         </div>
         <div class="d-flex justify-content-between">
-            <span>배송비:</span>
-            <span>3,000원</span>
+            <span>배송비(원):</span>
+            <span id="shipping-cost" class="product-price">3000</span> <!-- 배송비 추가 -->
         </div>
         <div class="d-flex justify-content-between font-weight-bold mt-2">
-            <span>합계:</span>
-            <span th:text="${#aggregates.sum(cartItems.![cartQuantity * product.prodPrice]) + 3000} + '원'">0원</span>
+            <span>합계(원):</span>
+            <span id="final-price" class="product-price">23000</span>
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll(".btn-delete").forEach(button => {
-            button.addEventListener("click", function() {
-                const cartNo = this.getAttribute("data-cart-no");
-                if (confirm("해당 상품을 삭제하시겠습니까?")) {
-                    location.href = "/cart/remove/" + cartNo;
-                }
-            });
-        });
-    });
-</script>
-
 </body>
 </html>
