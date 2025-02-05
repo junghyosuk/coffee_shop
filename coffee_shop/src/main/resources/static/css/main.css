@@ -37,4 +37,4 @@
 .tbl_cart .img_prod{width:100px;margin-right:20px;}
 .tbl_cart th, .tbl_cart td{position:relative;}
 .tbl_cart .form-check{position:absolute;top:50%;margin-top:-16px;}
-.tbl_cart td span{display:block;text-align:center;padding-top:34px;}
+.tbl_cart td span{display:block;text-align:center;}

@@ -52,6 +52,12 @@ public class CartServiceImpl implements CartService {
             throw new Exception("Not enough stock");
         }
 
+        // 이미 장바구니에 있는지 확인
+        boolean exists = checkProductInCart(usersId.getUsersId(), prodNo);
+        if (exists) {
+            throw new Exception("해당 상품이 이미 장바구니에 있습니다.");
+        }
+
         CartDTO cartDTO = new CartDTO();
         cartDTO.setUsers(usersId);
         cartDTO.setProduct(productEntity); // ProductEntity 설정
@@ -73,6 +79,19 @@ public class CartServiceImpl implements CartService {
         cartDTO.setStatus(1);
         cartRepository.save(cartDTO);
     }
+
+    // checkProductInCart 메서드 구현
+    @Override
+    public boolean checkProductInCart(String userId, long prodNo) {
+        List<CartDTO> cartList = cartRepository.findByUsers_UsersId(userId);
+        return cartList.stream().anyMatch(cart -> cart.getProduct().getProdNo() == prodNo);
+    }
+
+    @Override
+    public void removeCartItem(Integer cartNo) {
+        cartRepository.deleteById(cartNo);
+    }
+
 
 //    @Override
 //    public Optional<CartDTO> getCompletedOrders(String userId) {

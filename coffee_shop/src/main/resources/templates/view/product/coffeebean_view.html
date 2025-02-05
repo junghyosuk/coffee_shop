@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>website</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 추가 -->
 </head>
 <body>
 <!-- layout.html에서 content 영역에 삽입될 내용 -->
@@ -31,9 +32,6 @@
             <dl class="list_option">
                 <dt>주문수량</dt>
                 <dd class="d-flex align-items-center">
-<!--                    <button class="btn btn-outline-secondary" type="button">+</button>-->
-<!--                    <input type="text" class="form-control mx-2" style="width: 60px;" value="1"/>-->
-<!--                    <button class="btn btn-outline-secondary" type="button">-</button>-->
                     <input type="number" id="optQuantity" class="form-control" min="1" value="1">
                 </dd>
             </dl>
@@ -43,7 +41,7 @@
             </div>
             <div class="wrap_btn">
                 <a href="#" class="btn btn-primary">바로구매</a>
-                <form th:action="@{/cart/add}" method="post">
+                <form th:action="@{/cart/add}" method="post" id="cartForm">
                     <input type="hidden" name="prodNo" th:value="${product.prodNo}" />
                     <input type="hidden" name="cartQuantity" id="cartQuantity" value="1">
                     <button type="submit" class="btn btn-success">장바구니</button>
@@ -51,24 +49,7 @@
             </div>
         </div>
     </div>
-    <ul class="list_info nav nav-tabs mt-4">
-        <li class="nav-item">
-            <a class="nav-link active" href="#">상세정보</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">반품/교환정보</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">리뷰</a>
-        </li>
-    </ul>
-
-    <div class="detail_info mt-3">
-        <img src="/product_images/product_coffee1.jpg" th:src="@{/product_images/{imageName}(imageName=${product.prodImage2Name})}" alt="상세 이미지 1" class="img-fluid mb-2">
-        <div class="detail_prod">
-            <pre th:text="${product.prodInfo}"></pre>
-        </div>
-    </div>
 </div>
+
 </body>
 </html>

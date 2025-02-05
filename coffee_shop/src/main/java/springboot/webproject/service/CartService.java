@@ -8,10 +8,10 @@ import java.util.Optional;
 
 public interface CartService {
     List<CartDTO> getCartList(String usersId);
-
     void addProductToCart(UsersDTO usersId, long prodNo, int quantity) throws Exception;
-
     void completeOrder(int cartNo) throws Exception;
+    boolean checkProductInCart(String userId, long prodNo);
+    void removeCartItem(Integer cartNo);
 
 //    Optional<CartDTO> getCompletedOrders(String userId);
 }
