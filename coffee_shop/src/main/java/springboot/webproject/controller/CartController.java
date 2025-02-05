@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import springboot.webproject.dto.CartDTO;
 import springboot.webproject.dto.UsersDTO;
+import springboot.webproject.entity.ProductEntity;
+import springboot.webproject.repository.ProductRepository;
 import springboot.webproject.service.CartService;
 import springboot.webproject.service.UserService;
 
@@ -21,6 +23,7 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
     private final UserService userService;
+    private final ProductRepository productRepository;
 
 
     @GetMapping("/list")
@@ -37,28 +40,37 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    public String addProductToCart(Authentication authentication,
-                                   @RequestParam("prodNo") long prodNo,
-                                   @RequestParam("cartQuantity") int cartQuantity,
-                                   RedirectAttributes redirectAttributes) {
+    @ResponseBody
+    public ResponseEntity<String> addProductToCart(Authentication authentication,
+                                                   @RequestParam(value = "prodNo", required = false) Long prodNo,
+                                                   @RequestParam(value = "cartQuantity", required = false) Integer cartQuantity) {
         try {
+            // 요청 파라미터 검증
+            if (prodNo == null || cartQuantity == null) {
+                return ResponseEntity.badRequest().body("상품 번호와 수량이 필요합니다.");
+            }
+
             String username = authentication.getName();
             UsersDTO user = userService.findUserByUsersId(username);
+
             if (user == null) {
-                redirectAttributes.addFlashAttribute("error", "사용자를 찾을 수 없습니다.");
-                return "redirect:/cart/list";
+                return ResponseEntity.badRequest().body("사용자를 찾을 수 없습니다.");
             }
+
+            // 상품 타입을 확인하기 위해 상품 정보를 가져옵니다.
+            ProductEntity productEntity = productRepository.findByProdNo(prodNo)
+                    .orElseThrow(() -> new Exception("Product not found"));
+
             cartService.addProductToCart(user, prodNo, cartQuantity);
-            redirectAttributes.addFlashAttribute("message", "장바구니에 추가되었습니다.");
+            return ResponseEntity.ok("장바구니에 추가되었습니다."); // 성공 메시지 반환
+
         } catch (Exception e) {
-            if (e.getMessage().equals("Product already in cart")) {
-                redirectAttributes.addFlashAttribute("confirm", "이미 장바구니에 있는 상품입니다. 장바구니로 이동하시겠습니까?");
-                return "redirect:/product/view?prodNo=" + prodNo; // 현재 페이지로 리디렉트
-            }
-            redirectAttributes.addFlashAttribute("error", "추가 실패: " + e.getMessage());
+            return ResponseEntity.badRequest().body("추가 실패: " + e.getMessage()); // 일반 오류 메시지 반환
         }
-        return "redirect:/cart/list";
     }
+
+
+
 
     // 장바구니에서 상품 삭제
 //    @PostMapping("/delete")

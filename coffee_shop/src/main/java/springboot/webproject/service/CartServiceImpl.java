@@ -40,8 +40,8 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void addProductToCart(UsersDTO usersId, long prodNo, int cartQuantity) throws Exception {
-        if (usersId == null) {
+    public void addProductToCart(UsersDTO user, long prodNo, int cartQuantity) throws Exception {
+        if (user == null) {
             throw new Exception("User not found");
         }
 
@@ -53,19 +53,16 @@ public class CartServiceImpl implements CartService {
         }
 
         // 이미 장바구니에 있는지 확인
-        boolean exists = checkProductInCart(usersId.getUsersId(), prodNo);
+        boolean exists = checkProductInCart(user.getUsersId(), prodNo);
         if (exists) {
             throw new Exception("해당 상품이 이미 장바구니에 있습니다.");
         }
 
         CartDTO cartDTO = new CartDTO();
-        cartDTO.setUsers(usersId);
+        cartDTO.setUsers(user);
         cartDTO.setProduct(productEntity); // ProductEntity 설정
         cartDTO.setCartQuantity(cartQuantity);
         cartDTO.setStatus(0);
-
-        // ProductDTO로 변환하여 cartProduct에 설정
-//        cartDTO.setCartProduct(productEntity.toProductDTO()); // ProductEntity를 ProductDTO로 변환하는 메서드 필요
 
         cartRepository.save(cartDTO);
     }

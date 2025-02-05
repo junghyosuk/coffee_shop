@@ -10,8 +10,11 @@ import springboot.webproject.repository.ProductRepository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -110,5 +113,24 @@ public class ProductServiceImpl implements ProductService {
             return originalFileName;
         }
         return null;
+    }
+
+    // ✅ 주문 시 선택한 상품 목록을 반환하는 메소드 추가
+    @Override
+    public List<ProductDTO> getProductsByIds(List<Long> prodNos, List<Integer> quantities, List<Integer> totalPrices) {
+        List<ProductDTO> orderItems = new ArrayList<>();
+
+        // 주문 상품 ID 리스트를 기반으로 상품 조회
+        IntStream.range(0, prodNos.size()).forEach(i -> {
+            Optional<ProductEntity> productEntity = productRepository.findById(prodNos.get(i));
+            productEntity.ifPresent(product -> {
+                ProductDTO productDTO = product.toProductDTO();
+                productDTO.setOrderQuantity(quantities.get(i)); // 주문 수량 설정
+                productDTO.setTotalPrice(totalPrices.get(i));  // 주문 가격 설정
+                orderItems.add(productDTO);
+            });
+        });
+
+        return orderItems;
     }
 }

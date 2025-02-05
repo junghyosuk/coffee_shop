@@ -45,6 +45,10 @@ public class ProductDTO {
     private String prodInfo; // 제품 정보
     private LocalDateTime prodRegdate; // 등록일시
 
+    /// 주문 시 필요한 필드 추가
+    private int orderQuantity; // 주문 수량
+    private int totalPrice; // 총 가격
+
     // DTO → Entity 변환
     public ProductEntity toEntity(String mainImageName, String subImageName) {
         ProductEntity entity = new ProductEntity();

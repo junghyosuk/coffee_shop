@@ -25,12 +25,19 @@ CREATE SEQUENCE ORDERS_SEQ;
  */
 
 
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
-//@Entity
+@Entity
+@Table(name = "orders")
+@Getter
+@Setter
 public class OrdersDTO {
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ordersNo;
     private int ordersProdNo;
     private String ordersUsersId;

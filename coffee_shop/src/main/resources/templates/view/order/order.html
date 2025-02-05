@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>주문 페이지</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 추가 -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> <!-- Daum 주소 API -->
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">🛒 주문하기</h2>
+
+        <form th:action="@{/order/placeOrder}" method="post" id="orderForm">
+            <!-- 📦 주문 상품 정보 -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">📦 주문 상품 정보</div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>상품명</th>
+                            <th>수량</th>
+                            <th>가격</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item : ${orderItems}">
+                            <td>
+                                <input type="hidden" name="ordersProdNo" th:value="${item.prodNo}">
+                                <span th:text="${item.prodName}"></span>
+                            </td>
+                            <td>
+                                <input type="hidden" name="ordersCartAmount" th:value="${item.orderQuantity}">
+                                <span th:text="${item.orderQuantity}"></span>개
+                            </td>
+                            <td>
+                                <input type="hidden" name="ordersCartPrice" th:value="${item.totalPrice}">
+                                <span class="order-price" th:text="${#numbers.formatInteger(item.totalPrice, 3, 'COMMA')}"></span>원
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 👤 주문자 정보 -->
+            <div class="card mb-4">
+                <div class="card-header bg-secondary text-white">👤 주문자 정보</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="ordersUsersName" class="form-label">이름</label>
+                            <input type="text" class="form-control" id="ordersUsersName" name="ordersUsersName" th:value="${user.usersName}" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="ordersUsersPhone" class="form-label">휴대폰</label>
+                            <input type="text" class="form-control" id="ordersUsersPhone" name="ordersUsersPhone" th:value="${user.usersPhone}" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 🚚 배송지 정보 -->
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                    🚚 배송지 정보
+                    <button type="button" class="btn btn-light btn-sm" id="copyUserInfo">주문자 정보와 동일</button>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="ordersReceiverName" class="form-label">받는 사람</label>
+                            <input type="text" class="form-control" id="ordersReceiverName" name="ordersReceiverName">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="ordersReceiverPhone" class="form-label">연락처</label>
+                            <input type="text" class="form-control" id="ordersReceiverPhone" name="ordersReceiverPhone">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ordersReceiverZipcode" class="form-label">우편번호</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="ordersReceiverZipcode" name="ordersReceiverZipcode" readonly>
+                            <button type="button" class="btn btn-primary" id="findAddress">주소 검색</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ordersReceiverAddress1" class="form-label">주소</label>
+                        <input type="text" class="form-control" id="ordersReceiverAddress1" name="ordersReceiverAddress1" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ordersReceiverAddress2" class="form-label">상세 주소</label>
+                        <input type="text" class="form-control" id="ordersReceiverAddress2" name="ordersReceiverAddress2">
+                    </div>
+                </div>
+            </div>
+
+            <!-- ✅ 총 결제 금액 -->
+            <div class="card mb-4">
+                <div class="card-header bg-warning text-dark">💰 총 결제금액</div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <span>상품 합계:</span>
+                        <span id="total-product-price">0원</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>배송비:</span>
+                        <span id="shipping-cost">3,000원</span>
+                    </div>
+                    <div class="d-flex justify-content-between font-weight-bold mt-2">
+                        <span>최종 결제금액:</span>
+                        <span id="final-price">0원</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 결제 버튼 -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg" id="orderSubmit">💳 결제하기</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
