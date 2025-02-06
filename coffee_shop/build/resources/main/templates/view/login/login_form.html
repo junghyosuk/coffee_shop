@@ -5,58 +5,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <!--  <link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet">-->
 </head>
 <body>
 <div layout:fragment="content">
     <div class="login-container">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <h2>Login</h2>
-        <!-- 로그인 폼 -->
-        <p th:if="${param.error}" class="error-message">Invalid username or password.</p>
-        <!--  <form th:action="@{/login}" method="post">-->
-        <!--  <form th:action="@{/login}" method="post" th:object="${loginUser}">-->
-        <!--    <div class="form-group">-->
-        <!--      <label for="usersId">User ID</label>-->
-        <!--      <input type="text" id="usersId" name="usersId" th:field="*{usersId}" required placeholder="Enter your user ID">-->
-        <!--    </div>-->
-        <!--    <div class="form-group">-->
-        <!--      <label for="usersPw">Password</label>-->
-        <!--      <input type="password" id="usersPw" name="usersPw" th:field="*{usersPw}" required placeholder="Enter your password">-->
-        <!--    </div>-->
-        <!--    <div class="form-group">-->
-        <!--      <button type="submit" class="btn">Login</button>-->
-        <!--    </div>-->
-        <!--  </form>-->
-        <!--  &lt;!&ndash; 회원가입 링크 &ndash;&gt;-->
-        <!--  <p>-->
-        <!--    Don't have an account? <a th:href="@{/users/create}">Sign up</a>-->
-        <!--  </p>-->
-        <!-- 로그인이 필요합니다 메시지 표시 -->
-        <p th:if="${loginMessage}" style="color: red;" th:text="${loginMessage}"></p>
+        <h2 class="text-center mt-3">로그인</h2>
+        <p th:if="${param.error}" class="text-danger mt-2">Invalid username or password.</p>
+        <p th:if="${loginMessage}" class="text-danger mt-2" th:text="${loginMessage}"></p>
+
         <form th:action="@{/login}" method="post" th:object="${loginUser}">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <div class="form-group">
-                <label for="usersId">User ID</label>
-                <!--      <input type="text" id="usersId" name="usersId" th:field="*{usersId}" required placeholder="Enter your user ID">-->
-                <input type="text" id="username" name="username" th:field="*{usersId}" required placeholder="Enter your user ID">
-
+            <div class="form-group mt-3">
+                <label for="usersId">아이디</label>
+                <input type="text" id="usersId" name="usersId" th:field="*{usersId}" class="form-control" required placeholder="Enter your user ID">
             </div>
-            <div class="form-group">
-                <label for="usersPw">Password</label>
-                <!--      <input type="password" id="usersPw" name="usersPw" th:field="*{usersPw}" required placeholder="Enter your password">-->
-                <input type="password" id="password" name="password" th:field="*{usersPw}" required placeholder="Enter your password">
+            <div class="form-group mt-3">
+                <label for="usersPw">비밀번호</label>
+                <input type="password" id="usersPw" name="usersPw" th:field="*{usersPw}" class="form-control" required placeholder="Enter your password">
             </div>
-            <div class="form-group">
-                <button type="submit" class="btn">Login</button>
-            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-3">Login</button>
         </form>
 
-        <!-- 회원가입 링크 -->
-        <p>
-            Don't have an account? <a th:href="@{/users/create}">Sign up</a>
+        <p class="mt-3 text-center">
+            아직 계정이 없으신가요? <a th:href="@{/users/create}">회원가입</a>
         </p>
     </div>
 </div>
-</body>
-</html>

@@ -24,7 +24,7 @@ address,caption,cite,code,dfn,em,var {font-style:normal;font-weight:normal}
 .top_header .inner_top{width:1024px;margin:0 auto;text-align:right;}
 .list_top{padding:6px 0;}
 .list_top li{display:inline-block;}
-.list_top .link_top{margin-left:20px;}
+.list_top li{padding-left:20px;}
 
 .header{width:1024px;margin:0 auto;}
 .header .tit_logo{float:left;padding-top:8px;}

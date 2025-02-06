@@ -20,9 +20,11 @@
                 <li sec:authorize="hasRole('ROLE_ADMIN')">
                     <a href="/roles" th:href="@{/roles}" class="link_top">roles</a>
                 </li>
-                <li><a href="/signup" th:href="@{/users/create}" class="link_top">회원가입</a></li>
-                <li sec:authorize="isAuthenticated()" th:text="${#authentication.principal.username} + '님, 환영합니다.'">환영합니다</li>
-                <li>
+                <li sec:authorize="isAnonymous()">
+                    <a href="/signup" th:href="@{/users/create}" class="link_top">회원가입</a>
+                </li>
+                <li sec:authorize="isAuthenticated()">회원님, 환영합니다</li>
+                <li sec:authorize="isAuthenticated()">
                     <a href="/cart" th:href="@{/cart/list}">장바구니</a>
                 </li>
             </ul>
@@ -33,7 +35,9 @@
         <ul class="list_nav">
             <li><a href="/#" th:href="@{/product/coffeebean/list}" class="link_nav">원두커피</a></li>
             <li><a href="/#" th:href="@{/product/coldbrew/list}" class="link_nav">콜드브루</a></li>
-            <li><a href="/#" th:href="@{/admin/product}" class="link_nav">상품관리</a></li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')">
+                <a href="/#" th:href="@{/admin/product}" class="link_nav">상품관리</a>
+            </li>
             <li><a href="/#" th:href="@{/notices}" class="link_nav">Notice</a></li>
             <li><a href="user/qna" th:href="@{/user/qna}" class="link_nav">Qna</a></li>
             <li sec:authorize="hasRole('ADMIN')">

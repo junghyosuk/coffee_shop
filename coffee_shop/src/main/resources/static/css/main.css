@@ -3,6 +3,9 @@
 /* 로고 */
 .link_logo{display:block;width:200px;}
 
+/* 로그인 */
+.login-container, .create-user-container{width:500px;margin:0 auto;}
+
 /* 상품리스트 공통 */
 .cont_main .wrap_product{width:1024px;margin:50px auto 0;}
 .cont_main .wrap_product .tit_product{margin-bottom:40px;text-align:center;}

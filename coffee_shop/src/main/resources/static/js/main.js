@@ -15,6 +15,16 @@ $(document).ready(function() {
     var header = $("meta[name='_csrf_header']").attr('content');
     var token = $("meta[name='_csrf']").attr('content');
 
+    //회원가입
+    // 카카오 주소 검색 API
+    $("#SignupfindAddress").click(function() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                $("#SignupusersZipcode").val(data.zonecode); // 우편번호
+                $("#SignupusersAddress1").val(data.roadAddress); // 도로명 주소
+            }
+        }).open();
+    });
 
     //상품삭제 ajax
     $(".btn_remove").click(function() {
