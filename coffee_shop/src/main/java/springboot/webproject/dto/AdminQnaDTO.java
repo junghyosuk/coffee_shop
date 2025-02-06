@@ -12,8 +12,8 @@ package springboot.webproject.dto;
 	  */
 //@Entity
 public class AdminQnaDTO {
-   // @Id
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int qnaNo;
     private int qnaUsersno;
     private String qnaType;

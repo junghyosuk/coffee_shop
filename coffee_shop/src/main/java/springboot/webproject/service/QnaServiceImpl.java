@@ -38,4 +38,10 @@ public class QnaServiceImpl implements QnaService {
     public Optional<QnaDTO> getQnaWithUsers(int qnaNo) {
         return qnaRepository.findByQnaNoWithUsers(qnaNo);
     }
+
+    @Override
+    public QnaDTO getQnaByQnaNo(int qnaNo) {
+        return  qnaRepository.findByQnaNo(qnaNo)
+                .orElseThrow(() -> new RuntimeException("Qna not found with qnaNo: " + qnaNo));
+    }
 }

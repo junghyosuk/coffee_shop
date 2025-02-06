@@ -4,14 +4,15 @@
       layout:decorate="~{/layout/layout}">
 <head>
     <title>Notice List</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
 </head>
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content" class="notice-container">
 
     <div id="notice_list">
         <!--  <h2>Notices (Total: [[${notices.totalElements}]])</h2>-->
-        <h2>Notices (Total: [[${notices != null ? notices.totalElements : 0}]])</h2>
-        <table>
+        <h2 class="notice-title">Notices (Total: [[${notices != null ? notices.totalElements : 0}]])</h2>
+        <table class="notice-table">
             <thead>
             <tr>
                 <th>글번호</th>
@@ -25,7 +26,7 @@
                 <td th:text="${notice.noticeNo}"></td>
                 <td>
                     <a th:if="${notice.noticeNo != null}"
-                       th:href="@{/user/notices/detail(noticeNo=${notice.noticeNo}, pageNum=${currentPage}, pageSize=${pageSize})}"
+                       th:href="@{/notices/detail(noticeNo=${notice.noticeNo}, pageNum=${currentPage}, pageSize=${pageSize})}"
                        th:text="${notice.noticeTitle}"></a>
                     <span th:if="${notice.noticeNo == null}" th:text="Notice ID not available"></span>
                 </td>
@@ -44,7 +45,7 @@
 
         <!-- Pagination -->
 
-        <div id="pagination">
+        <div class="pagination" id="pagination">
             <!-- 이전 페이지 -->
             <span th:if="${currentPage > 1}">
         <a th:href="@{/user/notices(pageNum=${currentPage - 1}, pageSize=${pageSize})}">Previous</a>

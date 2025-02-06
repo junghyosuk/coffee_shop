@@ -6,15 +6,15 @@
     <title>Notice Detail</title>
 </head>
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content" class="notice-container">
     <h1>공지사항 상세</h1>
     <div>
-        <h2 th:text="${notice.noticeTitle}"></h2>
-        <p th:text="${notice.noticeContent}"></p>
-        <p>작성일: <span th:text="${notice.noticeDate}"></span></p>
+        <h2 class="notice-title" th:text="${notice.noticeTitle}"></h2>
+        <p class="notice-content" th:text="${notice.noticeContent}"></p>
+        <p class="notice-meta">작성일: <span th:text="${notice.noticeDate}"></span></p>
     </div>
     <!--  리턴 페이지 -->
-    <a th:href="@{/user/notices(pageNum=${currentPage}, pageSize=${pageSize})}">목록으로</a>
+    <a th:href="@{/notices(pageNum=${currentPage}, pageSize=${pageSize})}"  class="btn btn-secondary">목록으로</a>
     <!--<a href="/user/notices">목록으로</a>-->
 </div>
 </body>

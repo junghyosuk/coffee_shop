@@ -14,6 +14,7 @@ import springboot.webproject.service.UserService;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/order")
@@ -25,16 +26,27 @@ public class OrderController {
 
     // 주문 페이지 (장바구니 or 상품 상세에서 주문)
     @PostMapping("/checkout")
-    public String checkout(@RequestParam("prodNos") List<Long> prodNos,
-                           @RequestParam("quantities") List<Integer> quantities,
-                           @RequestParam("totalPrices") List<Integer> totalPrices,
-                           Authentication authentication, Model model) {
+    public String checkout(
+            @RequestParam("prodNos") List<Long> prodNos,
+            @RequestParam("quantities") List<Integer> quantities,
+            @RequestParam(value = "totalPrices", required = false) List<Integer> totalPrices,
+            Authentication authentication, Model model) {
+
+        System.out.println("prodNos="+prodNos);
+        System.out.println("prodNos="+quantities);
+        System.out.println("prodNos="+totalPrices);
+
         if (authentication == null) {
             return "redirect:/login";
         }
 
         String userId = authentication.getName();
         UsersDTO user = userService.findUserByUsersId(userId);
+
+        // 🛠️ totalPrices 값이 null이거나 NaN이면 기본값을 설정
+        if (totalPrices == null || totalPrices.contains(null)) {
+            totalPrices = quantities.stream().map(q -> 0).collect(Collectors.toList());
+        }
 
         // 상품 정보 가져오기
         List<ProductDTO> orderItems = productService.getProductsByIds(prodNos, quantities, totalPrices);

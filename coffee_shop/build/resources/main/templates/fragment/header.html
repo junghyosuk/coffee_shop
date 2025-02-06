@@ -34,10 +34,10 @@
             <li><a href="/#" th:href="@{/product/coffeebean/list}" class="link_nav">원두커피</a></li>
             <li><a href="/#" th:href="@{/product/coldbrew/list}" class="link_nav">콜드브루</a></li>
             <li><a href="/#" th:href="@{/admin/product}" class="link_nav">상품관리</a></li>
-            <li><a href="/user/notices" th:href="@{user/notices}" class="link_nav">Notice</a></li>
-            <li><a href="/user/qna" th:href="@{user/qna}" class="link_nav">Qna</a></li>
-            <li sec:authorize="hasRole('ROLE_ADMIN')">
-                <a href="/admin/create" th:href="@{admin/create}" class="link_nav">NoticeWrite</a>
+            <li><a href="/#" th:href="@{/notices}" class="link_nav">Notice</a></li>
+            <li><a href="user/qna" th:href="@{/user/qna}" class="link_nav">Qna</a></li>
+            <li sec:authorize="hasRole('ADMIN')">
+                <a href="/#" th:href="@{/admin/create}" class="link_nav">NoticeWrite</a>
             </li>
         </ul>
     </div>

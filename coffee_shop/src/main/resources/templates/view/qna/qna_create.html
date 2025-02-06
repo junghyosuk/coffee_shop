@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<head>
+    <title>QNA Detail</title>
+    <script>
+        function toggleAnswerForm() {
+            const answerForm = document.getElementById('answerForm');
+            answerForm.style.display = (answerForm.style.display === 'none') ? 'block' : 'none';
+        }
+    </script>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>질문 상세</h1>
+    <div>
+        <h2 th:text="${qna.qnaTitle}"></h2>
+        <p th:text="${qna.qnaContent}"></p>
+        <p>작성일: <span th:text="${qna.qnaDate}"></span></p>
+    </div>
+
+    <!-- 답변 추가 버튼 -->
+    <button onclick="toggleAnswerForm()">관리자 답변 온니 </button>
+
+    <!-- 답변 폼 (숨겨져 있다가 버튼 클릭 시 보임) -->
+    <div id="answerForm" style="display:none;">
+        <form th:action="@{/admin/qna/answer/{qnaNo}(qnaNo=${qna.qnaNo})}" th:method="post">
+            <textarea name="answerContent" required></textarea><br>
+            <input type="hidden" id="answerDate" name="answerDate"
+                   th:value="${T(java.time.LocalDateTime).now().format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd HH:mm:ss'))}" required />
+            <button type="submit">답변 등록</button>
+        </form>
+    </div>
+
+    <!-- 답변 목록 -->
+    <h2>답변 목록</h2>
+    <div th:each="answer : ${answers}">
+        <p th:text="${answer.answerContent}">답변 내용</p>
+        <p th:text="${answer.answerDate != null ? #temporals.format(answer.answerDate, 'yyyy-MM-dd HH:mm:ss') : '날짜 없음'}"></p>
+    </div>
+
+    <!-- 리턴 페이지 -->
+    <a th:href="@{/user/qna(pageNum=${currentPage}, pageSize=${pageSize})}">목록으로</a>
+</div>
+</body>
+</html>

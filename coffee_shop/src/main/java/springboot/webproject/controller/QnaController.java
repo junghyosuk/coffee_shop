@@ -9,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import springboot.webproject.dto.NoticeDTO;
+import springboot.webproject.dto.QnaAnswer;
 import springboot.webproject.dto.QnaDTO;
 import springboot.webproject.dto.UsersDTO;
+import springboot.webproject.service.QnaAnswerService;
 import springboot.webproject.service.QnaService;
 import springboot.webproject.service.UserService;
 
@@ -26,10 +28,13 @@ public class QnaController {
     private final QnaService qnaService;
     @Autowired
     private final UserService userService;
+    @Autowired
+    private final QnaAnswerService qnaAnswerService;
 
-    public QnaController(QnaService qnaService, UserService userService) {
+    public QnaController(QnaService qnaService, UserService userService, QnaAnswerService qnaAnswerService) {
         this.qnaService = qnaService;
         this.userService = userService;
+        this.qnaAnswerService = qnaAnswerService;
     }
 
     @GetMapping("/qna/create")
@@ -39,7 +44,7 @@ public class QnaController {
         String username = authentication.getName();
 //        System.out.println("Authenticated username: " + username);
         UsersDTO user = userService.findUserByUsersId(username); // 사용자 정보 조회
-        System.out.println("Fetched user: " + user);
+//        System.out.println("Fetched user: " + user);
         // QnaDTO 객체를 생성하고 usersNo를 hidden으로 설정합니다.
         QnaDTO qnaDTO = new QnaDTO();
         qnaDTO.setQnaUsersNo(user.getUsersNo());  // 현재 로그인한 사용자의 usersNo 설정
@@ -57,26 +62,38 @@ public class QnaController {
         qna.setUsers(user); // qnaDTO에 users 설정
 
         qnaService.createQna(qna);
-        System.out.println("qnaUsersNo: " + qna.getQnaUsersNo());// Save the user using the service
+//        System.out.println("qnaUsersNo: " + qna.getQnaUsersNo());// Save the user using the service
         qna.setQnaDate(LocalDateTime.now());
-        return new ModelAndView("redirect:/user/qna/create?success=true");
+        return new ModelAndView("redirect:/user/qna");
     }
     @GetMapping("/qna")
     public String getQna(
             @RequestParam(name = "page", defaultValue = "1") int page,
             @RequestParam(name = "size", defaultValue = "10") int size,
             @RequestParam(name = "qnaNo", defaultValue = "100000") int qnaNo,
-            Model model) {
+            Authentication authentication, // 로그인 사용자 정보
+            Model model
+
+    ) {
+
+        String username = authentication.getName();
+        UsersDTO user = userService.findUserByUsersId(username);
+        String loggedInUserId = user.getUsersId();  // usersNo 가져오기
         // PageRequest는 0부터 시작하므로 page-1로 설정
         Page<QnaDTO> qna = qnaService.getActiveQna(qnaNo, page, size);
         // 페이지네이션 정보 모델에 추가
 
         int currentPage = page;
         int totalPages = qna.getTotalPages();
+
+        System.out.println("현제 로그인 한사람의 로그인 번호 = "+ loggedInUserId);
         model.addAttribute("qnaList", qna);
         model.addAttribute("currentPage", currentPage);  // 현재 페이지
         model.addAttribute("totalPages", totalPages);  // 총 페이지 수
         model.addAttribute("pageSize", size);
+        model.addAttribute("loggedInUserNo", loggedInUserId); // 현재 로그인한 사용자 ID 추가
+
+
         return "view/qna/qna_list";
     }
     @GetMapping("/qna/detail")
@@ -87,6 +104,9 @@ public class QnaController {
         Optional<QnaDTO> qna = qnaService.getQnaDetail(qnaNo);
         if(qna.isPresent()){
             model.addAttribute("qna", qna.get());
+            /* 답변을 보내주기위해 해당 값을 view 보내주는 값들을 여기에서 보내주게 코딩함*/
+            List<QnaAnswer> answers = qnaAnswerService.getAnswersByQna(qnaNo);
+            model.addAttribute("answers", answers);
             // 페이징 정보 전달
             model.addAttribute("currentPage", pageNum);
             model.addAttribute("pageSize", pageSize);

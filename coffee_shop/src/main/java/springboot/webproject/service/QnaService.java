@@ -14,4 +14,5 @@ public interface QnaService {
     Optional<QnaDTO> getQnaDetail(int qnaNo);
     // QnaNo로 Qna와 Users 데이터를 함께 조회
     Optional<QnaDTO> getQnaWithUsers(int qnaNo);
+    QnaDTO getQnaByQnaNo(int qnaNo);
 }

@@ -19,7 +19,12 @@
         <label for="noticeContent">공지 내용:</label>
         <textarea id="noticeContent" name="noticeContent" required></textarea><br><br>
 
-        <input type="hidden" id="noticeDate" name="noticeDate" required /><br><br>
+
+        <input type="hidden" id="noticeDate" name="noticeDate"
+               th:value="${T(java.time.LocalDateTime).now().format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd HH:mm:ss'))}" required />
+
+
+        <!--        <input type="hidden" id="noticeDate" name="noticeDate" required /><br><br>-->
         <!-- Notice Status -->
         <label for="noticeStatus">공지 상태:</label>
         <select id="noticeStatus" name="noticeStatus" required>

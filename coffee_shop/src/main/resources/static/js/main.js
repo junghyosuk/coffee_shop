@@ -45,18 +45,19 @@ $(document).ready(function() {
 
     // 수량 변경 시 총 금액 계산 및 hidden input 값 업데이트
     $('#optQuantity').on('input', function() {
-        const quantity = $(this).val();
-        const pricePerUnit = parseInt($('#unitPrice').text().replace(/,/g, '')); // 가격 가져오기
+        const quantity = parseInt($(this).val()) || 1; // NaN 방지
+        const pricePerUnit = parseInt($('#unitPrice').text().replace(/,/g, '')) || 0; // NaN 방지
         const totalPrice = pricePerUnit * quantity;
 
         // UI 업데이트
         $("#totalPrice").text(totalPrice.toLocaleString());
 
-        // Hidden input 값 업데이트 (form 제출 시 사용됨)
+        // Hidden input 값 업데이트
         $("#quantityInput").val(quantity);
         $("#totalPriceInput").val(totalPrice);
-        $("#cartQuantity").val(quantity); // 장바구니 추가 시 수량 업데이트
+        $("#cartQuantity").val(quantity);
     });
+
 
     // 장바구니 버튼 클릭 시 확인
     $("#cartForm").on('submit', function(event) {
@@ -98,16 +99,23 @@ $(document).ready(function() {
 
     // 주문 폼 제출 시 hidden input 업데이트
     $("#orderForm").submit(function(event) {
-        const quantity = $("#optOrderQuantity").val();
-        const pricePerUnit = parseInt($("#totalPriceInput").val());
+        const quantity = parseInt($("#quantityInput").val()) || 1;
+        const totalPrice = parseInt($("#totalPriceInput").val()) || 0;
 
-        // 총 가격 계산
-        const totalPrice = quantity * pricePerUnit;
+        console.log("quantity = " + quantity);
+        console.log("totalPrice = " + totalPrice);
+
+        if (isNaN(totalPrice) || totalPrice <= 0) {
+            alert("총 금액이 올바르지 않습니다. 다시 시도해주세요.");
+            event.preventDefault(); // 폼 제출 방지
+            return;
+        }
 
         // Hidden input 값 업데이트
         $("#quantityInput").val(quantity);
         $("#totalPriceInput").val(totalPrice);
     });
+
 
 
 

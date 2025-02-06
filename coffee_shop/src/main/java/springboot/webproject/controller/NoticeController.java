@@ -57,6 +57,7 @@ public class NoticeController {
         // 페이지네이션 정보 모델에 추가
         int currentPage = page;
         int totalPages = notices.getTotalPages();
+
         model.addAttribute("notices", notices);
         model.addAttribute("currentPage", currentPage);  // 현재 페이지
         model.addAttribute("totalPages", totalPages);  // 총 페이지 수

@@ -1,74 +1,209 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"-->
+<!--      layout:decorate="~{/layout/layout}"-->
+<!--      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">-->
+<!--<head>-->
+<!--    <title>QnA List</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div layout:fragment="content">-->
+
+<!--    <div id="qna_list">-->
+<!--        <h2>QnA (Total: [[${qnaList != null ? qnaList.totalElements : 0}]])</h2>-->
+<!--        <table>-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>글번호</th>-->
+<!--                <th>제목</th>-->
+<!--&lt;!&ndash;                <th th:if="${#authentication.authorities.?[name=='ROLE_ADMIN']}">제목</th> &lt;!&ndash; Admin만 보임 &ndash;&gt;&ndash;&gt;-->
+<!--                <th>내용</th>-->
+<!--                <th>작성자 이름</th>-->
+<!--                <th>작성자 이메일</th>-->
+<!--                <th>작성일</th>-->
+<!--                <th>문의 유형</th>-->
+<!--                <th>상태</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="qna : ${qnaList.content}">-->
+<!--                <td th:text="${qna.qnaNo}"></td>-->
+<!--                <td>-->
+<!--                    <a th:if="${qna.qnaNo != null}"-->
+<!--                       th:href="@{/user/qna/detail(qnaNo=${qna.qnaNo}, pageNum=${currentPage}, pageSize=${pageSize})}"-->
+<!--                       th:text="${qna.qnaTitle}"></a>-->
+<!--                    <span th:if="${qna.qnaNo == null}" th:text="QnA ID not available"></span>-->
+<!--                </td>-->
+<!--&lt;!&ndash;                <td th:if="${#authentication.authorities.?[name=='ROLE_ADMIN']}">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a th:if="${qna.qnaNo != null}"&ndash;&gt;-->
+<!--&lt;!&ndash;                       th:href="@{/user/qna/detail_admin(qnaNo=${qna.qnaNo}, pageNum=${currentPage}, pageSize=${pageSize})}"&ndash;&gt;-->
+<!--&lt;!&ndash;                       th:text="${qna.qnaTitle}"></a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span th:if="${qna.qnaNo == null}" th:text="QnA ID not available"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;                </td>&ndash;&gt;-->
+<!--                <td th:text="${qna.qnaContent}"></td>-->
+<!--                <td th:text="${qna.users.usersName}"></td> &lt;!&ndash; 작성자 이름 &ndash;&gt;-->
+<!--                <td th:text="${qna.users.usersEmail}"></td> &lt;!&ndash; 작성자 이메일 &ndash;&gt;-->
+<!--&lt;!&ndash;                <td th:text="${#dates.format(qna.qnaDate, 'yyyy-MM-dd HH:mm:ss')}"></td>&ndash;&gt;-->
+<!--&lt;!&ndash;                <td th:text="${qna.qnaDate"></td>&ndash;&gt;-->
+
+<!--                <td th:text="${qna.qnaDate != null ? #temporals.format(qna.qnaDate, 'yyyy-MM-dd HH:mm:ss') : '날짜 없음'}"></td>-->
+<!--                <td th:text="${qna.qnaType}"></td>-->
+<!--                <td th:text="${qna.qnaStatus == 1 ? '미답변' : '답변완료'}"></td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+
+
+<!--        <a href="qna/create" th:href="@{qna/create}" class="link_nav">QNAWrite</a>-->
+
+
+<!--        &lt;!&ndash; Pagination &ndash;&gt;-->
+<!--        <div id="pagination">-->
+<!--            &lt;!&ndash; 이전 페이지 &ndash;&gt;-->
+<!--            <span th:if="${currentPage > 1}">-->
+<!--                <a th:href="@{/user/qna(pageNum=${currentPage - 1}, pageSize=${pageSize})}">Previous</a>-->
+<!--            </span>-->
+
+<!--            &lt;!&ndash; 페이지 번호 &ndash;&gt;-->
+<!--            <span th:each="i : ${#numbers.sequence(1, totalPages)}">-->
+<!--                <a th:href="@{/user/qna(pageNum=${i}, pageSize=${pageSize})}"-->
+<!--                   th:text="${i}"-->
+<!--                   th:classappend="${i == currentPage} ? 'current' : ''"></a>-->
+<!--            </span>-->
+
+<!--            &lt;!&ndash; 다음 페이지 &ndash;&gt;-->
+<!--            <span th:if="${currentPage < totalPages}">-->
+<!--                <a th:href="@{/user/qna(pageNum=${currentPage + 1}, pageSize=${pageSize})}">Next</a>-->
+<!--            </span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{/layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>QnA List</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
 </head>
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content" class="qna-container">
 
-    <div id="qna_list">
-        <h2>QnA (Total: [[${qnaList != null ? qnaList.totalElements : 0}]])</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>글번호</th>
-                <th>제목</th>
-                <th>내용</th>
-                <th>작성자 이름</th>
-                <th>작성자 이메일</th>
-                <th>작성일</th>
-                <th>문의 유형</th>
-                <th>상태</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="qna : ${qnaList.content}">
-                <td th:text="${qna.qnaNo}"></td>
-                <td>
-                    <a th:if="${qna.qnaNo != null}"
-                       th:href="@{/user/qna/detail(qnaNo=${qna.qnaNo}, pageNum=${currentPage}, pageSize=${pageSize})}"
-                       th:text="${qna.qnaTitle}"></a>
-                    <span th:if="${qna.qnaNo == null}" th:text="QnA ID not available"></span>
-                </td>
-                <td th:text="${qna.qnaContent}"></td>
-                <td th:text="${qna.users.usersName}"></td> <!-- 작성자 이름 -->
-                <td th:text="${qna.users.usersEmail}"></td> <!-- 작성자 이메일 -->
-                <!--                <td th:text="${#dates.format(qna.qnaDate, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
-                <!--                <td th:text="${qna.qnaDate"></td>-->
+    <h2 class="qna-title">QnA (Total: [[${qnaList != null ? qnaList.totalElements : 0}]])</h2>
+    <table class="qna-table">
+        <thead>
 
-                <td th:text="${qna.qnaDate != null ? #temporals.format(qna.qnaDate, 'yyyy-MM-dd HH:mm:ss') : '날짜 없음'}"></td>
-                <td th:text="${qna.qnaType}"></td>
-                <td th:text="${qna.qnaStatus == 1 ? '미답변' : '답변완료'}"></td>
-            </tr>
-            </tbody>
-        </table>
+        <tr>
+            <th>글번호</th>
+            <th>제목</th>
+            <th>내용</th>
+            <th>작성자 이름</th>
+            <th>작성자 이메일</th>
+            <th>작성일</th>
+            <th>문의 유형</th>
+            <th>상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 현재 로그인한 사용자 ID 저장 -->
+        <input type="hidden" id="loggedInUserNo" name="loggedInUserNo" th:value="${loggedInUserNo}" />
+
+        <tr th:each="qna : ${qnaList.content}">
+            <!--            <td>로그인한 사용자 번호: <span th:text="${loggedInUserNo}"></span></td>-->
+            <!--            <td>게시글 작성자 번호: <span th:text="${qna.users.usersName}"></span></td>-->
+            <td th:text="${qna.qnaNo}"></td>
+            <td>
+                <a th:if="${qna.qnaNo != null}"
+                   th:href="@{/user/qna/detail(qnaNo=${qna.qnaNo}, pageNum=${currentPage}, pageSize=${pageSize})}"
+                   th:text="${qna.qnaTitle}"></a>
+                <span th:if="${qna.qnaNo == null}" th:text="QnA ID not available"></span>
+            </td>
+
+            <!-- 내용 -->
+            <td th:switch="${qna.qnaStatus}">
+                <span th:case="2" th:text="${qna.qnaContent}"></span>
+                <span th:case="1" th:text="${#strings.equals(qna.users.usersName, loggedInUserNo) ? qna.qnaContent : '비공개'}"></span>
+            </td>
+
+            <!-- 작성자 이름 -->
+            <td th:switch="${qna.qnaStatus}">
+                <span th:case="2" th:text="${qna.users.usersName}"></span>
+                <span th:case="1" th:text="${#strings.equals(qna.users.usersName, loggedInUserNo) ? qna.users.usersName : '비공개'}"></span>
+            </td>
+
+            <!-- 작성자 이메일 -->
+            <td th:switch="${qna.qnaStatus}">
+                <span th:case="2" th:text="${qna.users.usersEmail}"></span>
+                <span th:case="1" th:text="${#strings.equals(qna.users.usersName, loggedInUserNo) ? qna.users.usersEmail : '비공개'}"></span>
+            </td>
 
 
-        <a href="qna/create" th:href="@{qna/create}" class="link_nav">QNAWrite</a>
+            <td th:text="${qna.qnaDate != null ? #temporals.format(qna.qnaDate, 'yyyy-MM-dd HH:mm:ss') : '날짜 없음'}"></td>
+            <td th:text="${qna.qnaType}"></td>
+            <td th:text="${qna.qnaStatus == 1 ? '비밀글' : '공개글'}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <!--    <table class="qna-table">-->
+    <!--        <thead>-->
+    <!--        <tr>-->
+    <!--            <th>글번호</th>-->
+    <!--            <th>제목</th>-->
+    <!--            <th>내용</th>-->
+    <!--            <th>작성자 이름</th>-->
+    <!--            <th>작성자 이메일</th>-->
+    <!--            <th>작성일</th>-->
+    <!--            <th>문의 유형</th>-->
+    <!--            <th>상태</th>-->
+    <!--        </tr>-->
+    <!--        </thead>-->
+    <!--        <tbody>-->
+    <!--        <input type="hidden" id="qnaUsersNo" name="qnaUsersNo" th:value="${qna.qnaUsersNo}" />-->
+    <!--        <tr th:each="qna : ${qnaList.content}">-->
+    <!--            <td th:text="${qna.qnaNo}"></td>-->
+    <!--            <td>-->
+    <!--                <a th:if="${qna.qnaNo != null}"-->
+    <!--                   th:href="@{/user/qna/detail(qnaNo=${qna.qnaNo}, pageNum=${currentPage}, pageSize=${pageSize})}"-->
+    <!--                   th:text="${qna.qnaTitle}"></a>-->
+    <!--                <span th:if="${qna.qnaNo == null}" th:text="QnA ID not available"></span>-->
+    <!--            </td>-->
+    <!--            <td th:text="${qna.qnaContent}"></td>-->
+    <!--            <td th:text="${qna.users.usersName}"></td>-->
+    <!--            <td th:text="${qna.users.usersEmail}"></td>-->
+    <!--            <td th:text="${qna.qnaDate != null ? #temporals.format(qna.qnaDate, 'yyyy-MM-dd HH:mm:ss') : '날짜 없음'}"></td>-->
+    <!--            <td th:text="${qna.qnaType}"></td>-->
+    <!--            <td th:text="${qna.qnaStatus == 1 ? '미답변' : '답변완료'}"></td>-->
+    <!--        </tr>-->
+    <!--        </tbody>-->
+    <!--    </table>-->
 
+    <!-- QnA 작성 버튼 -->
+    <a href="qna/create" th:href="@{qna/create}" class="qna-link">QNA 작성</a>
 
-        <!-- Pagination -->
-        <div id="pagination">
-            <!-- 이전 페이지 -->
-            <span th:if="${currentPage > 1}">
-                <a th:href="@{/user/qna(pageNum=${currentPage - 1}, pageSize=${pageSize})}">Previous</a>
-            </span>
+    <!-- Pagination -->
+    <div class="pagination">
+        <!-- 이전 페이지 -->
+        <span th:if="${currentPage > 1}">
+            <a th:href="@{/user/qna(pageNum=${currentPage - 1}, pageSize=${pageSize})}">이전</a>
+        </span>
 
-            <!-- 페이지 번호 -->
-            <span th:each="i : ${#numbers.sequence(1, totalPages)}">
-                <a th:href="@{/user/qna(pageNum=${i}, pageSize=${pageSize})}"
-                   th:text="${i}"
-                   th:classappend="${i == currentPage} ? 'current' : ''"></a>
-            </span>
+        <!-- 페이지 번호 -->
+        <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+            <a th:href="@{/user/qna(pageNum=${i}, pageSize=${pageSize})}"
+               th:text="${i}"
+               th:classappend="${i == currentPage} ? 'current' : ''"></a>
+        </span>
 
-            <!-- 다음 페이지 -->
-            <span th:if="${currentPage < totalPages}">
-                <a th:href="@{/user/qna(pageNum=${currentPage + 1}, pageSize=${pageSize})}">Next</a>
-            </span>
-        </div>
+        <!-- 다음 페이지 -->
+        <span th:if="${currentPage < totalPages}">
+            <a th:href="@{/user/qna(pageNum=${currentPage + 1}, pageSize=${pageSize})}">다음</a>
+        </span>
     </div>
+
 </div>
 </body>
 </html>
